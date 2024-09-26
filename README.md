@@ -1,1 +1,1 @@
-# Multivariate_Statistical_Course_Assignments_Fall2024
+# Multivariate Statistical Course_Assignments Fall2024
