@@ -1,1 +1,2 @@
-.html
+# Ignore html created by R markdown
+*.html
