@@ -133,21 +133,153 @@ plot(complete_linkage, main = "Complete Linkage", sub = "", xlab = "", ylab = "H
 Cluster the primate.scapulae data using single-linkage, averagelinkage, and complete-linkage agglomerative hierarchical clustering methods. Find the five-cluster solutions for all three methods, which allows comparison with the true primate classifications. Find the misclassification rate
 for all three methods. Show that the lowest rate occurs for the completelinkage method and the highest for the single-linkage method.
 
+```{r}
+
+```
+
 <br>
 
 ### Ex. 11.1: Applied Multivariate Statistical Analysis (Johnson & Wichern)
+
+Consider the two data sets
+
+\[
+X_1 = \begin{bmatrix} 3 & 7 \\ 2 & 4 \\ 4 & 7 \end{bmatrix}, \quad
+X_2 = \begin{bmatrix} 6 & 9 \\ 5 & 7 \\ 4 & 8 \end{bmatrix}
+\]
+
+for which
+
+\[
+\bar{x}_1 = \begin{bmatrix} 3 \\ 6 \end{bmatrix}, \quad
+\bar{x}_2 = \begin{bmatrix} 5 \\ 8 \end{bmatrix}
+\]
+
+and
+
+\[
+S_{\text{pooled}} = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix}
+\]
+
+- (a) Calculate the linear discriminant function in (11-19). 
+- (b) Classify the observation \(\mathbf{x_0} = \begin{bmatrix} 2 \\ 7 \end{bmatrix}\) as population \(\pi_1\) or population \(\pi_2\), using Rule (11-18) with equal priors and equal costs.
+
+***Answer on PDF***
 
 <br>
 
 ### Ex. 11.3: Applied Multivariate Statistical Analysis (Johnson & Wichern)
 
+Prove Result 11.1. 
+
+***Answer on PDF***
+
 <br>
 
 ### Ex. 11.5: Applied Multivariate Statistical Analysis (Johnson & Wichern)
 
+Show that
+
+\[
+-\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_1)' \Sigma^{-1} (\mathbf{x} - \boldsymbol{\mu}_1) + \frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_2)' \Sigma^{-1} (\mathbf{x} - \boldsymbol{\mu}_2)
+\]
+
+is equivalent to:
+
+\[
+(\boldsymbol{\mu}_1 - \boldsymbol{\mu}_2)' \Sigma^{-1} \mathbf{x} - \frac{1}{2} (\boldsymbol{\mu}_1 - \boldsymbol{\mu}_2)' \Sigma^{-1} (\boldsymbol{\mu}_1 + \boldsymbol{\mu}_2)
+\]
+
+***Answer on PDF***
+
 <br>
 
 ### Ex. 12.1: Applied Multivariate Statistical Analysis (Johnson & Wichern)
+
+Certain characteristics associated with a few recent U.S. presidents are listed in Table 12.11:
+
+| President    | Birthplace | Elected first term? | Party       | Prior U.S. congressional experience? | Served as vice president? |
+|--------------|------------|---------------------|-------------|-------------------------------------|----------------------------|
+| R. Reagan    | Midwest    | Yes                 | Republican  | No                                  | No                         |
+| J. Carter    | South      | Yes                 | Democrat    | No                                  | No                         |
+| G. Ford      | Midwest    | No                  | Republican  | Yes                                 | Yes                        |
+| R. Nixon     | West       | Yes                 | Republican  | Yes                                 | Yes                        |
+| L. Johnson   | South      | No                  | Democrat    | Yes                                 | Yes                        |
+| J. Kennedy   | East       | Yes                 | Democrat    | Yes                                 | No                         |
+
+1. **(a)** Introducing appropriate binary variables, calculate similarity coefficient 1 in Table 12.1 for pairs of presidents. 
+2. **(b)** Proceeding as in Part a, calculate similarity coefficients 2 and 3 in Table 12.1 Verify the mono tonicity relation of coefficients 1,2, and 3 by displaying the order of the 15 similarities for each coefficient.
+
+```{r}
+# Create the table of presidents with their characteristics
+presidents <- data.frame(
+  Name = c("R. Reagan", "J. Carter", "G. Ford", "R. Nixon", "L. Johnson", "J. Kennedy"),
+  Birthplace = c("No South", "South", "No South", "No South", "South", "No South"),
+  ElectedFirstTerm = c(1, 1, 0, 0, 0, 1),
+  Party = c("Republican", "Democrat", "Republican", "Republican", "Democrat", "Democrat"),
+  CongressionalExperience = c(0, 0, 1, 1, 1, 1),
+  ServedVP = c(0, 0, 1, 0, 1, 0)
+)
+
+# Convert the categorical variables to binary form
+presidents$BirthplaceBinary <- ifelse(presidents$Birthplace == "South", 1, 0)
+presidents$PartyBinary <- ifelse(presidents$Party == "Republican", 1, 0)
+
+# Final binary matrix of variables
+binary_data <- presidents[, c("BirthplaceBinary", "ElectedFirstTerm", "PartyBinary", "CongressionalExperience", "ServedVP")]
+binary_data
+
+# Function to calculate Jaccard similarity
+jaccard_similarity <- function(x, y) {
+  return(sum(x == y) / length(x))
+}
+
+# Function to calculate Hamming distance
+hamming_distance <- function(x, y) {
+  return(sum(x != y))
+}
+
+# Function to calculate Dice similarity
+dice_similarity <- function(x, y) {
+  return(2 * sum(x == y) / (length(x) + sum(x == y)))
+}
+
+# Calculate similarities for all pairs of presidents
+n <- nrow(binary_data)
+similarities_jaccard <- matrix(0, n, n)
+similarities_dice <- matrix(0, n, n)
+hamming_distances <- matrix(0, n, n)
+
+# Loop through all pairs of presidents
+for (i in 1:(n-1)) {
+  for (j in (i+1):n) {
+    similarities_jaccard[i, j] <- jaccard_similarity(binary_data[i, ], binary_data[j, ])
+    similarities_dice[i, j] <- dice_similarity(binary_data[i, ], binary_data[j, ])
+    hamming_distances[i, j] <- hamming_distance(binary_data[i, ], binary_data[j, ])
+  }
+}
+
+# Display the similarity matrices
+cat("Jaccard Similarity Matrix:\n")
+print(similarities_jaccard)
+cat("Dice Similarity Matrix:\n")
+print(similarities_dice)
+cat("Hamming Distance Matrix:\n")
+print(hamming_distances)
+
+# Convert the matrices into ordered lists to compare the ranks of the coefficients
+jaccard_list <- sort(similarities_jaccard[upper.tri(similarities_jaccard)], decreasing = TRUE)
+dice_list <- sort(similarities_dice[upper.tri(similarities_dice)], decreasing = TRUE)
+hamming_list <- sort(hamming_distances[upper.tri(hamming_distances)])
+
+# Display the ordered coefficients
+cat("Jaccard Similarities (Ordered):\n")
+print(jaccard_list)
+cat("Dice Similarities (Ordered):\n")
+print(dice_list)
+cat("Hamming Distances (Ordered):\n")
+print(hamming_list)
+```
 
 <br>
 
@@ -165,30 +297,30 @@ Suppose we measure two variables \(X_1\) and \(X_2\) for four items \(A\), \(B\)
 Use the **K-means clustering** technique to divide the items into \(K = 2\) clusters, starting with the initial groups (AB) and (CD).
 
 ```{r}
-# Create the dataset with items A, B, C, and D
+# Creating the dataset with items A, B, C, and D
 data <- data.frame(
   Item = c("A", "B", "C", "D"),  
   X1 = c(5, 1, -1, 3),           
   X2 = c(4, -2, 1, 1)            
 )
 
-# Display the dataset
+# Displaying the dataset
 print(data)
 
-# Define the initial positions of the cluster centers
+# Defining the initial positions of the cluster centers
 initial_centers <- data.frame(
   X1 = c(mean(c(5, 1)), mean(c(-1, 3))),  
   X2 = c(mean(c(4, -2)), mean(c(1, 1)))   
 )
 
-# Display the initial centers
+# Displaying the initial centers
 print(initial_centers)
 
-# Perform k-means clustering using the initial centers
+# Performing k-means clustering using the initial centers
 set.seed(123)  
 kmeans_result <- kmeans(data[, c("X1", "X2")], centers = initial_centers)  
 
-# Display the clustering results
+# Displaying the clustering results
 cat("Cluster assignments:\n")  
 print(kmeans_result$cluster)
 
@@ -200,21 +332,41 @@ print(kmeans_result$centers)
 
 ### Ex. 5.1: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
 
+```{r}
+
+```
+
 <br>
 
 ### Ex. 5.6: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+```{r}
+
+```
 
 <br>
 
 ### Ex. 5.12: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
 
+```{r}
+
+```
+
 <br>
 
 ### Ex. 15.2: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
 
+```{r}
+
+```
+
 <br>
 
 ### Ex. 15.3: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+```{r}
+
+```
 
 <br>
 
