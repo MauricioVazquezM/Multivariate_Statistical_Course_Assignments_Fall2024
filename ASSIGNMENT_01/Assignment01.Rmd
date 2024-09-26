@@ -11,13 +11,16 @@ knitr::opts_chunk$set(echo = TRUE)
 # Libraries
 library(MASS)  
 library(ggplot2)
+library(GGally)
 ```
+
+<br>
 
 ### Ex. 8.2: Modern Multivariate Statistical Techniques (Izenman)
 
 Consider the wine data. Compute a LDA, draw a 2D-scatterplot of the first two LDF coordinates, and color-code the points by wine type. What do you notice?
 
-```{r cars}
+```{r}
 # Loading dataset
 load("C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_01/wine.rda")
 
@@ -50,12 +53,169 @@ ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
 
 ```
 
-## Including Plots
+<br>
 
-You can also embed plots, for example:
+### Ex. 8.3: Modern Multivariate Statistical Techniques (Izenman)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+Suppose \( X_1 \sim N_r(\mu_1, \Sigma_{XX}) \) and \( X_2 \sim N_r(\mu_2, \Sigma_{XX}) \) are independently distributed. Consider the statistic:
+
+\[
+\frac{(E(a^\tau X_1) - E(a^\tau X_2))^2}{\text{Var}(a^\tau X_1 - a^\tau X_2)}
+\]
+
+as a function of \( a \). Show that \( a \propto \Sigma_{XX}^{-1}(\mu_1 - \mu_2) \) maximizes the statistic using a Lagrange multiplier approach.
+
+***Answer on PDF***
+
+<br>
+
+### Ex. 8.5: Modern Multivariate Statistical Techniques (Izenman)
+
+Consider the diabetes data. Draw a scatterplot matrix of all five variables with different colors or symbols representing the three classes of
+diabetes. Do these pairwise plots suggest multivariate Gaussian distributions for each class with equal covariance matrices? Carry out an LDA and
+draw the 2D-scatterplot of the first two discriminating functions. Using the
+leave-one-out CV procedure, find the confusion table and identify those observations that are incorrectly classified based upon the LDA classification
+rule. Do the same for the QDA procedure.
+
+```{r}
+# Loading dataset
+load("C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_01/diabetes.rda")
+
+# Parsing to dataframe
+diabetes_df <- as.data.frame(diabetes)
+
+# Checking head dataset
+head(diabetes_df)
+
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+<br>
+
+### Ex. 12.2: Modern Multivariate Statistical Techniques (Izenman)
+
+Write a computer program to implement single-linkage, averagelinkage, and complete-linkage agglomerative hierarchical clustering. Try it
+out on a data set of your choice.
+
+```{r}
+# Loading dataset
+load("C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_01/wine.rda")
+
+# Parsing to dataframe
+wine_df <- as.data.frame(wine)
+
+# Checking head dataset
+head(wine_df)
+
+# Compute distance matrix
+dist_matrix <- dist(wine_df)
+
+# Single linkage clustering
+single_linkage <- hclust(dist_matrix, method = "single")
+
+# Average linkage clustering
+average_linkage <- hclust(dist_matrix, method = "average")
+
+# Complete linkage clustering
+complete_linkage <- hclust(dist_matrix, method = "complete")
+
+dev.off()
+plot(single_linkage, main = "Single Linkage", sub = "", xlab = "", ylab = "Height")
+plot(average_linkage, main = "Average Linkage", sub = "", xlab = "", ylab = "Height")
+plot(complete_linkage, main = "Complete Linkage", sub = "", xlab = "", ylab = "Height")
+
+```
+
+<br>
+
+### Ex. 12.3: Modern Multivariate Statistical Techniques (Izenman)
+
+Cluster the primate.scapulae data using single-linkage, averagelinkage, and complete-linkage agglomerative hierarchical clustering methods. Find the five-cluster solutions for all three methods, which allows comparison with the true primate classifications. Find the misclassification rate
+for all three methods. Show that the lowest rate occurs for the completelinkage method and the highest for the single-linkage method.
+
+<br>
+
+### Ex. 11.1: Applied Multivariate Statistical Analysis (Johnson & Wichern)
+
+<br>
+
+### Ex. 11.3: Applied Multivariate Statistical Analysis (Johnson & Wichern)
+
+<br>
+
+### Ex. 11.5: Applied Multivariate Statistical Analysis (Johnson & Wichern)
+
+<br>
+
+### Ex. 12.1: Applied Multivariate Statistical Analysis (Johnson & Wichern)
+
+<br>
+
+### Ex. 12.11: Applied Multivariate Statistical Analysis (Johnson & Wichern)
+
+Suppose we measure two variables \(X_1\) and \(X_2\) for four items \(A\), \(B\), \(C\), and \(D\). The data are as follows:
+
+| Item | \(X_1\) | \(X_2\) |
+|------|--------|--------|
+| A    | 5      | 4      |
+| B    | 1      | -2     |
+| C    | -1     | 1      |
+| D    | 3      | 1      |
+
+Use the **K-means clustering** technique to divide the items into \(K = 2\) clusters, starting with the initial groups (AB) and (CD).
+
+```{r}
+# Create the dataset with items A, B, C, and D
+data <- data.frame(
+  Item = c("A", "B", "C", "D"),  
+  X1 = c(5, 1, -1, 3),           
+  X2 = c(4, -2, 1, 1)            
+)
+
+# Display the dataset
+print(data)
+
+# Define the initial positions of the cluster centers
+initial_centers <- data.frame(
+  X1 = c(mean(c(5, 1)), mean(c(-1, 3))),  
+  X2 = c(mean(c(4, -2)), mean(c(1, 1)))   
+)
+
+# Display the initial centers
+print(initial_centers)
+
+# Perform k-means clustering using the initial centers
+set.seed(123)  
+kmeans_result <- kmeans(data[, c("X1", "X2")], centers = initial_centers)  
+
+# Display the clustering results
+cat("Cluster assignments:\n")  
+print(kmeans_result$cluster)
+
+cat("\nCluster centers:\n") 
+print(kmeans_result$centers)
+```
+
+<br>
+
+### Ex. 5.1: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+<br>
+
+### Ex. 5.6: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+<br>
+
+### Ex. 5.12: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+<br>
+
+### Ex. 15.2: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+<br>
+
+### Ex. 15.3: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+<br>
+
+

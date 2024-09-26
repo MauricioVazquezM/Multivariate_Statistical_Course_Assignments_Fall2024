@@ -1,6 +1,11 @@
 ## Modern Multivariate Statistical Techniques (Izenman) Ex. 8.2
 library(MASS)  
 library(ggplot2)
+library(GGally)
+
+install.packages("GGally")
+
+
 
 # 
 load("C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_01/wine.rda")
@@ -34,3 +39,17 @@ ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
        y = "Second Discriminant Component (LD2)") +
   theme_minimal() +
   theme(legend.title = element_blank())
+
+## Modern Multivariate Statistical Techniques (Izenman) Ex. 8.5
+# Loading dataset
+load("C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_01/diabetes.rda")
+
+# Parsing to dataframe
+diabetes_df <- as.data.frame(diabetes)
+
+# Checking head dataset
+head(diabetes_df)
+
+# Scatterplot matrix of all five variables, colored by class
+ggpairs(diabetes_df, columns = 1:5, aes(color = class)) +
+  labs(title = "Scatterplot Matrix of Diabetes Data")
