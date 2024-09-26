@@ -334,9 +334,7 @@ print(kmeans_result$centers)
 
 Consider a classification problem with \(K\) classes and a target vector \(\mathbf{t}\) that uses a 1-of-K binary coding scheme. Show that the conditional expectation \( \mathbb{E}[\mathbf{t}|\mathbf{x}] \) is given by the posterior probability \( p(C_k|\mathbf{x}) \).
 
-```{r}
-
-```
+***Answer on PDF***
 
 <br>
 
@@ -347,9 +345,7 @@ Consider two non-negative numbers \(a\) and \(b\), and show that if \(a \leq b\)
    p(\text{mistake}) \leq \int \sqrt{p(\mathbf{x}|C_1) p(\mathbf{x}|C_2)} \, d\mathbf{x}.
    \]
 
-```{r}
-
-```
+***Answer on PDF***
 
 <br>
 
@@ -357,9 +353,7 @@ Consider two non-negative numbers \(a\) and \(b\), and show that if \(a \leq b\)
 
 Using equations (5.40) and (5.41), derive the result (5.48) for the posterior class probability in the two-class generative model with Gaussian densities, and verify the results (5.49) and (5.50) for the parameters \(\mathbf{w}\) and \(w_0\).
 
-```{r}
-
-```
+***Answer on PDF***
 
 <br>
 
