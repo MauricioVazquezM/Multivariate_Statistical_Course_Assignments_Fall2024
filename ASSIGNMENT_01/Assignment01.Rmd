@@ -332,6 +332,8 @@ print(kmeans_result$centers)
 
 ### Ex. 5.1: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
 
+Consider a classification problem with \(K\) classes and a target vector \(\mathbf{t}\) that uses a 1-of-K binary coding scheme. Show that the conditional expectation \( \mathbb{E}[\mathbf{t}|\mathbf{x}] \) is given by the posterior probability \( p(C_k|\mathbf{x}) \).
+
 ```{r}
 
 ```
@@ -339,6 +341,11 @@ print(kmeans_result$centers)
 <br>
 
 ### Ex. 5.6: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+Consider two non-negative numbers \(a\) and \(b\), and show that if \(a \leq b\), then: \[a \leq \sqrt{ab}\]Use this result to show that if the decision regions of a two-class classification problem are chosen to minimize the probability of misclassification, then the probability of misclassification will satisfy 
+   \[
+   p(\text{mistake}) \leq \int \sqrt{p(\mathbf{x}|C_1) p(\mathbf{x}|C_2)} \, d\mathbf{x}.
+   \]
 
 ```{r}
 
@@ -348,6 +355,8 @@ print(kmeans_result$centers)
 
 ### Ex. 5.12: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
 
+Using equations (5.40) and (5.41), derive the result (5.48) for the posterior class probability in the two-class generative model with Gaussian densities, and verify the results (5.49) and (5.50) for the parameters \(\mathbf{w}\) and \(w_0\).
+
 ```{r}
 
 ```
@@ -356,6 +365,8 @@ print(kmeans_result$centers)
 
 ### Ex. 15.2: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
 
+In this exercise, we derive the sequential form for the \( K \)-means algorithm. At each step we consider a new data point \( x_n \), and only the prototype vector that is closest to \( x_n \) is updated. Starting from the expression (15.4) for the prototype vectors in the batch setting, separate out the contribution from the final data point \( x_n \). By rearranging the formula, show that this update takes the form (15.5). Note that, since no approximation is made in this derivation, the resulting prototype vectors will have the property that they each equal the mean of all the data vectors that were assigned to them.
+
 ```{r}
 
 ```
@@ -363,6 +374,8 @@ print(kmeans_result$centers)
 <br>
 
 ### Ex. 15.3: Deep Learning: Foundations and Concepts  (Bishop & Bishop)
+
+Consider a Gaussian mixture model in which the marginal distribution \(p(z)\) for the latent variable is given by (15.9) and the conditional distribution \(p(x|z)\) for the observed variable is given by (15.10). Show that the marginal distribution \(p(x)\), obtained by summing \(p(z) p(x|z)\) over all possible values of \(z\), is a Gaussian mixture of the form (15.6).
 
 ```{r}
 
