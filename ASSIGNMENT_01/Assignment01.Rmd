@@ -1,0 +1,61 @@
+---
+title: "Assignment 01"
+author: "Mauricio Vazquez & Mariana Luna"
+date: '2024-09-27'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Libraries
+library(MASS)  
+library(ggplot2)
+```
+
+### Ex. 8.2: Modern Multivariate Statistical Techniques (Izenman)
+
+Consider the wine data. Compute a LDA, draw a 2D-scatterplot of the first two LDF coordinates, and color-code the points by wine type. What do you notice?
+
+```{r cars}
+# Loading dataset
+load("C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_01/wine.rda")
+
+# Parsing to dataframe
+wine_df <- as.data.frame(wine)
+
+# Checking head dataset
+head(wine_df)
+
+# Parsing dataset column 
+wine_df$classdigit <- as.factor(wine_df$classdigit)
+
+# Performing LDA 
+lda_model <- lda(classdigit ~ Alcohol + MalicAcid + Ash + AlcAsh + Mg + Phenols + Flav + NonFlavPhenols + Proa + Color + Hue + OD + Proline, data = wine_df)
+
+# Projecting the data onto the LDA axes
+lda_values <- predict(lda_model)
+
+# Creating a data frame with the LDA components
+lda_df <- data.frame(LD1 = lda_values$x[, 1], LD2 = lda_values$x[, 2], WineType = wine_df$class)
+
+# Plotting
+ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
+  geom_point(size = 3) +
+  labs(title = "Scatterplot of the First Two LDA Components",
+       x = "First Discriminant Component (LD1)",
+       y = "Second Discriminant Component (LD2)") +
+  theme_minimal() +
+  theme(legend.title = element_blank())
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
