@@ -205,7 +205,7 @@ ari_single <- adjustedRandIndex(primate.scapulae$class, single_clusters)
 ari_average <- adjustedRandIndex(primate.scapulae$class, average_clusters)
 ari_complete <- adjustedRandIndex(primate.scapulae$class, complete_clusters)
 
-# Misclassification rates (1 - ARI, as ARI = 1 for perfect match)
+# Misclassification rates 
 misclassification_single <- 1 - ari_single
 misclassification_average <- 1 - ari_average
 misclassification_complete <- 1 - ari_complete
