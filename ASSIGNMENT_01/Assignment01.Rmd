@@ -13,6 +13,7 @@ library(MASS)
 library(ggplot2)
 library(GGally)
 library(mclust)
+library(kableExtra)
 ```
 
 <br>
@@ -147,32 +148,26 @@ Write a computer program to implement single-linkage, averagelinkage, and comple
 out on a data set of your choice.
 
 ```{r}
-# Loading dataset
-load("C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_01/wine.rda")
+d7 <- eurodist
+d7 <- na.omit(d7)
+kable(head(as.matrix(d7), c(7L, 7L)), row.names = T)
 
-# Parsing to dataframe
-wine_df <- as.data.frame(wine)
+diss_matrix7 <- dist(d7, method="euclidean")
+hc1_7 <- hclust(diss_matrix7, method="single")
+hc2_7 <- hclust(diss_matrix7, method="complete")
+hc3_7 <- hclust(diss_matrix7, method="average")
 
-# Checking head dataset
-head(wine_df)
+plot(hc1_7, cex=0.6, hang=-1,
+main = "Cluster Dendrogram Single-Linkage",
+sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las=2)
 
-# Compute distance matrix
-dist_matrix <- dist(wine_df)
+plot(hc2_7, cex=0.6, hang=-1,
+main = "Cluster Dendrogram Complete-Linkage",
+sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las =2)
 
-# Single linkage clustering
-single_linkage <- hclust(dist_matrix, method = "single")
-
-# Average linkage clustering
-average_linkage <- hclust(dist_matrix, method = "average")
-
-# Complete linkage clustering
-complete_linkage <- hclust(dist_matrix, method = "complete")
-
-dev.off()
-plot(single_linkage, main = "Single Linkage", sub = "", xlab = "", ylab = "Height")
-plot(average_linkage, main = "Average Linkage", sub = "", xlab = "", ylab = "Height")
-plot(complete_linkage, main = "Complete Linkage", sub = "", xlab = "", ylab = "Height")
-
+plot(hc3_7, cex=0.6, hang=-1,
+main = "Cluster Dendrogram Average-Linkage",
+sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las =2)
 ```
 
 <br>
@@ -440,9 +435,7 @@ Using equations (5.40) and (5.41), derive the result (5.48) for the posterior cl
 
 In this exercise, we derive the sequential form for the \( K \)-means algorithm. At each step we consider a new data point \( x_n \), and only the prototype vector that is closest to \( x_n \) is updated. Starting from the expression (15.4) for the prototype vectors in the batch setting, separate out the contribution from the final data point \( x_n \). By rearranging the formula, show that this update takes the form (15.5). Note that, since no approximation is made in this derivation, the resulting prototype vectors will have the property that they each equal the mean of all the data vectors that were assigned to them.
 
-```{r}
-
-```
+***Answer on PDF***
 
 <br>
 
@@ -450,9 +443,7 @@ In this exercise, we derive the sequential form for the \( K \)-means algorithm.
 
 Consider a Gaussian mixture model in which the marginal distribution \(p(z)\) for the latent variable is given by (15.9) and the conditional distribution \(p(x|z)\) for the observed variable is given by (15.10). Show that the marginal distribution \(p(x)\), obtained by summing \(p(z) p(x|z)\) over all possible values of \(z\), is a Gaussian mixture of the form (15.6).
 
-```{r}
-
-```
+***Answer on PDF***
 
 <br>
 

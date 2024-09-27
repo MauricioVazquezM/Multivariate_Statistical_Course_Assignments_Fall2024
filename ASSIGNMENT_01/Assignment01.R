@@ -248,3 +248,24 @@ print(kmeans_result$cluster)
 cat("\nCluster centers:\n") 
 print(kmeans_result$centers)
 
+d7 <- eurodist
+d7 <- na.omit(d7)
+kable(head(as.matrix(d7), c(7L, 7L)), row.names = T)
+
+diss_matrix7 <- dist(d7, method="euclidean")
+hc1_7 <- hclust(diss_matrix7, method="single")
+hc2_7 <- hclust(diss_matrix7, method="complete")
+hc3_7 <- hclust(diss_matrix7, method="average")
+
+plot(hc1_7, cex=0.6, hang=-1,
+     main = "Cluster Dendrogram Single-Linkage",
+     sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las=2)
+
+plot(hc2_7, cex=0.6, hang=-1,
+     main = "Cluster Dendrogram Complete-Linkage",
+     sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las =2)
+
+plot(hc3_7, cex=0.6, hang=-1,
+     main = "Cluster Dendrogram Average-Linkage",
+     sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las =2)
+
