@@ -150,23 +150,39 @@ Write a computer program to implement single-linkage, averagelinkage, and comple
 out on a data set of your choice.
 
 ```{r}
+# Loading the eurodist dataset
 d7 <- eurodist
+
+# Removing any missing values
 d7 <- na.omit(d7)
+
+# Displaying the first 7 rows and 7 columns of the distance matrix
 kable(head(as.matrix(d7), c(7L, 7L)), row.names = T)
 
+
+# Computing the Euclidean distance matrix from the dataset 'd7'
 diss_matrix7 <- dist(d7, method="euclidean")
+
+# Performing hierarchical clustering using the single-linkage method
 hc1_7 <- hclust(diss_matrix7, method="single")
+
+# Performing hierarchical clustering using the complete-linkage method
 hc2_7 <- hclust(diss_matrix7, method="complete")
+
+# Performing hierarchical clustering using the average-linkage method
 hc3_7 <- hclust(diss_matrix7, method="average")
 
+# Plotting the dendrogram for the single-linkage clustering result
 plot(hc1_7, cex=0.6, hang=-1,
 main = "Cluster Dendrogram Single-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las=2)
 
+# Plotting the dendrogram for the complete-linkage clustering result
 plot(hc2_7, cex=0.6, hang=-1,
 main = "Cluster Dendrogram Complete-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las =2)
 
+# Plotting the dendrogram for the average-linkage clustering result
 plot(hc3_7, cex=0.6, hang=-1,
 main = "Cluster Dendrogram Average-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset eurodist", las =2)
@@ -287,7 +303,7 @@ Certain characteristics associated with a few recent U.S. presidents are listed 
 2. **(b)** Proceeding as in Part a, calculate similarity coefficients 2 and 3 in Table 12.1 Verify the mono tonicity relation of coefficients 1,2, and 3 by displaying the order of the 15 similarities for each coefficient.
 
 ```{r}
-# Create the table of presidents with their characteristics
+# Creating the table of presidents with their characteristics
 presidents <- data.frame(
   Name = c("R. Reagan", "J. Carter", "G. Ford", "R. Nixon", "L. Johnson", "J. Kennedy"),
   Birthplace = c("No South", "South", "No South", "No South", "South", "No South"),
@@ -297,7 +313,7 @@ presidents <- data.frame(
   ServedVP = c(0, 0, 1, 0, 1, 0)
 )
 
-# Convert the categorical variables to binary form
+# Converting the categorical variables to binary form
 presidents$BirthplaceBinary <- ifelse(presidents$Birthplace == "South", 1, 0)
 presidents$PartyBinary <- ifelse(presidents$Party == "Republican", 1, 0)
 
@@ -320,7 +336,7 @@ dice_similarity <- function(x, y) {
   return(2 * sum(x == y) / (length(x) + sum(x == y)))
 }
 
-# Calculate similarities for all pairs of presidents
+# Calculating similarities for all pairs of presidents
 n <- nrow(binary_data)
 similarities_jaccard <- matrix(0, n, n)
 similarities_dice <- matrix(0, n, n)
@@ -335,7 +351,7 @@ for (i in 1:(n-1)) {
   }
 }
 
-# Display the similarity matrices
+# Displaying the similarity matrices
 cat("Jaccard Similarity Matrix:\n")
 print(similarities_jaccard)
 cat("Dice Similarity Matrix:\n")
@@ -343,12 +359,12 @@ print(similarities_dice)
 cat("Hamming Distance Matrix:\n")
 print(hamming_distances)
 
-# Convert the matrices into ordered lists to compare the ranks of the coefficients
+# Converting the matrices into ordered lists to compare the ranks of the coefficients
 jaccard_list <- sort(similarities_jaccard[upper.tri(similarities_jaccard)], decreasing = TRUE)
 dice_list <- sort(similarities_dice[upper.tri(similarities_dice)], decreasing = TRUE)
 hamming_list <- sort(hamming_distances[upper.tri(hamming_distances)])
 
-# Display the ordered coefficients
+# Displaying the ordered coefficients
 cat("Jaccard Similarities (Ordered):\n")
 print(jaccard_list)
 cat("Dice Similarities (Ordered):\n")
