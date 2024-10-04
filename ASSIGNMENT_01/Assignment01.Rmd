@@ -2,13 +2,13 @@
 title: "Assignment 01"
 author: "Mauricio Vazquez & Mariana Luna"
 date: '2024-09-27'
-output: html_document
+output: pdf_document
 ---
 
 ***Repository link: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, fig.width=10)
 
 # Libraries
 library(MASS)  
@@ -38,7 +38,8 @@ head(wine_df)
 wine_df$classdigit <- as.factor(wine_df$classdigit)
 
 # Performing LDA 
-lda_model <- lda(classdigit ~ Alcohol + MalicAcid + Ash + AlcAsh + Mg + Phenols + Flav + NonFlavPhenols + Proa + Color + Hue + OD + Proline, data = wine_df)
+lda_model <- lda(classdigit ~ Alcohol + MalicAcid + Ash + AlcAsh + Mg + Phenols + Flav + NonFlavPhenols + Proa + Color + Hue + OD + Proline, 
+                 data= wine_df)
 
 # Projecting the data onto the LDA axes
 lda_values <- predict(lda_model)
@@ -98,7 +99,8 @@ ggpairs(diabetes_df, columns = 1:5, aes(color = as.factor(class), shape = as.fac
        color = "Class", shape = "Class")
 
 # Performing LDA
-lda_model <- lda(class ~ glucose.area + insulin.area + SSPG + relative.weight + fasting.plasma.glucose, data = diabetes_df)
+lda_model <- lda(class ~ glucose.area + insulin.area + SSPG + relative.weight + fasting.plasma.glucose, 
+                 data = diabetes_df)
 
 # Predicting the discriminant functions
 lda_values <- predict(lda_model)
@@ -126,7 +128,8 @@ misclassified_lda <- which(lda_pred != diabetes_df$class)
 misclassified_lda 
 
 # Performing QDA
-qda_model <- qda(class ~ glucose.area + insulin.area + SSPG + relative.weight + fasting.plasma.glucose, data = diabetes_df)
+qda_model <- qda(class ~ glucose.area + insulin.area + SSPG
+                 + relative.weight + fasting.plasma.glucose, data = diabetes_df)
 
 # Performing QDA with Leave-One-Out CV
 qda_cv <- qda(class ~ glucose.area + insulin.area + SSPG + relative.weight + fasting.plasma.glucose, 
