@@ -25,7 +25,10 @@ library(kableExtra)
 ***Inciso a) Divida los datos en un conjunto de entrenamiento y un conjunto de prueba. Use el conjunto de entrenamiento para construir un clasificador. Justifique su elección de ese clasificador en específico.***
 
 ```{r, include=FALSE}
-
+# Cargando data
+setwd("~/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/EXAM 01")
+load("wine.rda")
+wine_df <- as.data.frame(wine)
 
 ```
 
@@ -52,6 +55,11 @@ library(kableExtra)
 ***Inciso a) Aplique al menos 3 métodos de clustering a los datos y explique en que difieren los resultados. ***
 
 ```{r, include=FALSE}
+# Cargando data
+setwd("~/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/EXAM 01")
+load("diabetes.rda")
+diabetes_df <- as.data.frame(diabetes)
+
 
 ```
 
