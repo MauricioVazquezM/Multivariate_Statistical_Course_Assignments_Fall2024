@@ -1,0 +1,76 @@
+---
+title: "Primer Examen Parcial Estadistica Aplicada III"
+author: "Mauricio Vazquez"
+date: '2024-10-07'
+output: html_document
+---
+
+***Repository link: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, fig.width=10)
+
+# Libraries
+library(MASS)  
+library(ggplot2)
+library(GGally)
+library(mclust)
+library(kableExtra)
+```
+
+<br>
+
+### Pregunta 1: Utilice el WineData de la tarea.
+
+***Inciso a) Divida los datos en un conjunto de entrenamiento y un conjunto de prueba. Use el conjunto de entrenamiento para construir un clasificador. Justifique su elección de ese clasificador en específico.***
+
+```{r, include=FALSE}
+
+
+```
+
+<br>
+
+***Inciso b) Evalúe dicho clasificador. Use al menos dos criterios. Explique sus resultados.***
+
+```{r, include=FALSE}
+
+```
+
+<br>
+
+***Inciso c) Utilice un gráfico para explicar lo que está haciendo el clasificador propuesto en el primer inciso. Explíquelo que se puede aprender con base a dicho gráfico.***
+
+```{r, include=FALSE}
+
+```
+
+<br>
+
+### Pregunta 2: los datos de diabetes de la tarea.
+
+***Inciso a) Aplique al menos 3 métodos de clustering a los datos y explique en que difieren los resultados. ***
+
+```{r, include=FALSE}
+
+```
+
+<br>
+
+***Inciso b) ¿Cuántos clusters deben reportarse como resultado? Justifique su respuesta.***
+
+```{r, include=FALSE}
+
+```
+
+<br>
+
+***Inciso c) Explique qué decisiones subjetivas tuvo que tomar al hacer el análisis de clustering. Trate de justificar dichas decisiones.***
+
+```{r, include=FALSE}
+
+```
+
+<br>
+
+
