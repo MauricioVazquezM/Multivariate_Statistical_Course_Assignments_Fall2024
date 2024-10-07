@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-***Link del repositorio: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
+***Link del repositorio de GitHub: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, fig.width=10)
@@ -136,7 +136,7 @@ Ahora, como se venia mencionando mas arriba, se puede notar que un modelo QDA ti
 
 <br>
 
-```{r fig.width=10, fig.height=3, echo=FALSE}
+```{r fig.width=9, fig.height=4, echo=FALSE}
 # Ploteando
 ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
   geom_point(size = 3) +
