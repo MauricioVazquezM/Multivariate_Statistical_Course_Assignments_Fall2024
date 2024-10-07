@@ -157,6 +157,9 @@ En general, el modelo de clasificacion propuesto funciona muy bien con un accura
 
 <br>
 
+
+\newpage
+
 ### Pregunta 2: Utilice los datos de diabetes de la tarea.
 
 * ***a) Aplique al menos 3 métodos de clustering a los datos y explique en que difieren los resultados. ***
@@ -178,7 +181,7 @@ data<- diabetes_df[, -which(names(diabetes_df) == "class")]
 diss_matrix <- dist(data, method="euclidean")
 ```
 
-```{r fig.width=10, fig.height=5, echo=FALSE}
+```{r fig.width=10, fig.height=4.5, echo=FALSE}
 # Haciendo clustering jerarquico usando el metodo de single-linkage
 hc1 <- hclust(diss_matrix, method="single")
 
@@ -188,7 +191,7 @@ main = "Dendrograma Single-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
 ```
 
-```{r fig.width=10, fig.height=5, echo=FALSE}
+```{r fig.width=10, fig.height=4.5, echo=FALSE}
 # Haciendo clustering jerarquico usando el metodo de complete-linkage
 hc2 <- hclust(diss_matrix, method="complete")
 
@@ -198,7 +201,7 @@ main = "Dendrograma Complete-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
 ```
 
-```{r fig.width=10, fig.height=5, echo=FALSE}
+```{r fig.width=10, fig.height=4.5, echo=FALSE}
 # Haciendo clustering jerarquico usando el metodo de average-linkage
 hc3 <- hclust(diss_matrix, method="average")
 
