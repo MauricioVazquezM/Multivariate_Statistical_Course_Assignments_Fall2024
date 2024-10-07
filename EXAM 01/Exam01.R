@@ -6,7 +6,7 @@ library(mclust)
 library(kableExtra)
 
 
-# Ejercicio 1
+###### Ejercicio 1 ######
 # Revisando LDA
 load("wine.rda")
 
@@ -103,6 +103,18 @@ ggplot(qda_df, aes(x = LD1, y = LD2, color = PredictedClass, shape = ActualClass
   scale_color_discrete(name = "Clase Predicha") +
   scale_shape_discrete(name = "Clase Real")
 
-# Ejercicio 2
+# Calcular F1 score
+confusion_stats <- confusionMatrix(lda_predictions$class, test_data$classdigit)
+precision <- confusion_stats$byClass["Pos Pred Value"]
+recall <- confusion_stats$byClass["Sensitivity"]
+f1_score <- 2 * ((precision * recall) / (precision + recall))
+
+print(paste("Accuracy del modelo LDA:", round(accuracy * 100, 2),"%"))
+prin(paste("F1-Score del modelo LDA:", round(f1_score * 100, 2), "%\n"))
+
+
+
+
+###### Ejercicio 2 ######
 load("diabetes.rda")
 diabetes_df <- as.data.frame(diabetes)

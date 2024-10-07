@@ -1,11 +1,11 @@
 ---
-title: "Primer Examen Parcial Estadistica Aplicada III"
-author: "Mauricio Vazquez"
+title: "Estadistica Aplicada III: Primer Examen Parcial "
+author: "Mauricio Vazquez Moran"
 date: '2024-10-07'
 output: html_document
 ---
 
-***Repository link: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
+***Link del repositorio: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, fig.width=10)
@@ -18,19 +18,22 @@ library(mclust)
 library(kableExtra)
 library(FactoMineR)
 library(knitr)
+library(caret)
 ```
 
 <br>
 
 ### Pregunta 1: Utilice el WineData de la tarea.
 
-* ***Inciso a) Divida los datos en un conjunto de entrenamiento y un conjunto de prueba. Use el conjunto de entrenamiento para construir un clasificador. Justifique su elección de ese clasificador en específico.***
-* ***Inciso b) Evalúe dicho clasificador. Use al menos dos criterios. Explique sus resultados.***
-* ***Inciso c) Utilice un gráfico para explicar lo que está haciendo el clasificador propuesto en el primer inciso. Explíquelo que se puede aprender con base a dicho gráfico.***
+* ***a) Divida los datos en un conjunto de entrenamiento y un conjunto de prueba. Use el conjunto de entrenamiento para construir un clasificador. Justifique su elección de ese clasificador en específico.***
+* ***b) Evalúe dicho clasificador. Use al menos dos criterios. Explique sus resultados.***
+* ***c) Utilice un gráfico para explicar lo que está haciendo el clasificador propuesto en el primer inciso. Explíquelo que se puede aprender con base a dicho gráfico.***
 
 <br>
 
-* Se selecciono un clasificador del tipo Analisis Discriminante Lineal (LDA). Este tiene como objetivo encontrar en el espacio las caracteristicas que maximicen la separacion de clases. Se se paro el conjunto de datos en uno de entrenamiento y uno de prueba para analizar los resultados de este modelo. Lo que se obtuvo fue lo siguiente:
+Se selecciono un clasificador del tipo Analisis Discriminante Lineal (LDA). Este tiene como objetivo encontrar en el espacio las caracteristicas que maximicen la separacion de clases. Se selecciono este modelo de clasificacion debido a que es un modelo simple que nos brinda alta interpretabilidad en sus resultados y que puede nos brinda un menor riesgo de sobreajuste a comparacion con un QDA, como mas a abajo lo analizaremos. Ademas, al tener un conjunto de datos pequeño en wine.rda, LDA tiene menor probabilidad de sobreajustarlo.
+
+Se se paro el conjunto de datos en uno de entrenamiento y uno de prueba para analizar los resultados de este modelo. Lo que se obtuvo fue lo siguiente:
 
 ```{r, echo=FALSE}
 # Seteando nuestro directorio de trabajo
@@ -69,25 +72,24 @@ lda_df <- data.frame(LD1 = lda_predictions$x[, 1], LD2 = lda_predictions$x[, 2],
 
 # Evaluar el modelo con una matriz de confusión
 confusion_matrix_lda <- table(Predicted = lda_predictions$class, Actual = test_data$classdigit)
-#print(confusion_matrix_lda)
-
-# Calcular precisión
-accuracy <- sum(diag(confusion_matrix_lda)) / sum(confusion_matrix_lda)
-#print(paste("Accuracy del modelo LDA:", round(accuracy * 100, 2),"%"))
-
-# Evaluar el modelo con una matriz de confusión
-confusion_matrix_lda <- table(Predicted = lda_predictions$class, Actual = test_data$classdigit)
 print(confusion_matrix_lda)
 
 # Calcular precisión
 accuracy <- sum(diag(confusion_matrix_lda)) / sum(confusion_matrix_lda)
+
+# Imprimiendo acccuracy
 print(paste("Accuracy del modelo LDA:", round(accuracy * 100, 2),"%"))
 ```
 
 <br>
 
-**JUSTICACION:**
+**Analisis:**
 
+1. La matriz de confusion nos muestra que hubo una observacion de la clase2(Grignolino) que fue incorrectamente clasificada como clase1(Barolo).
+2. Por otro lado, la matriz de confusion nos muestra que una observacion de la clase3(Barbera) que fue incorrectamente clasificada como clase2(Barolo).
+3. La matriz de confusion nos muestra que una observacion de la clase2(Grignolino) fue incorrectamente clasificada como clase3(Barbera).
+4. Por lo mencionado arriba, se puede pensar que puede haber cierta superposicion entre las clases 2 y 3, esto debido a los errores capturados por la matriz de confusion.
+5. El accuracy del modelo fue del 94.44%. Esto es un muy buen resultado para el modelo de clasificacion LDA. Esta metrica nos indica que el modelo es lo suficientemente robusto para capturar las diferencias entre las 3 clases presentes en el dataset. Si bien es cierto que hay algunas clasificaciones equivocas, en general, el modelo da muy buenos resultados con este conjunto de datos.
 
 <br>
 
@@ -119,14 +121,16 @@ qda_predictions <- predict(qda_model_wine, test_data)
 
 # Evaluar el modelo con una matriz de confusión
 confusion_matrix <- table(Predicted = qda_predictions$class, Actual = test_data$classdigit)
-print(confusion_matrix)
+#print(confusion_matrix)
 
 # Calcular precisión
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 print(paste("Accuracy del modelo QDA:", round(accuracy * 100, 2),"%"))
 ```
 
-* Ahora,
+<br>
+
+Ahora, como se venia mencionando mas arriba, se puede notar que un modelo QDA tiene un accuracy del 100%. Esto si bien es cierto que nos indica un desempeño perfecto en la clasificacion de las clases presentes en wine.rda, nos dice tambien que sobreajusta el conjunto de datos. Dicho en otras palabras, el modelo "memoriza" los datos en lugar de aprender patrones generalizables. Por consecuencia, esto genera una falta de capacidad de generalizar y, por ende, tener un rendimiento malo con datos no vistos por el modelo. En conclusion, esto nos indica que un modelo QDA para un conjunto de datos como este no es el adecuado a usar.
 
 <br>
 
@@ -134,7 +138,7 @@ print(paste("Accuracy del modelo QDA:", round(accuracy * 100, 2),"%"))
 # Ploteando
 ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
   geom_point(size = 3) +
-  labs(title = "Scatterplot de las dos primeras Componentes LDA",
+  labs(title = "Scatterplot de las dos primeras Componentes LDA (prediccion)",
        x = "Primera Componente Discriminante (LD1)",
        y = "Segunda Componente Discriminante (LD2)") +
   theme_minimal() +
@@ -143,11 +147,11 @@ ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
 
 <br>
 
-* Como podemos observar, parecer ser que la primera componente discriminante separa mejor Barbera de las otras dos clases, ya que existe cierta distancia en el LD1 entre el grupo de Barbera y los otros dos grupos de datos (Barolo y Grignolino).
-* Como podemos observar, la segunda componenete discriminante brinda una buena separacion entre Barolo y Grignolino, ya que estos se puede observar que estan separadas verticalmente a lo largo del eje LD2.
+* Como podemos observar, parecer ser que la primera componente discriminante(LD1) separa mejor Barbera de las otras dos clases, ya que existe cierta distancia en el LD1 entre el grupo de Barbera y los otros dos grupos(Barolo y Grignolino). Esto puede ser un indicativo de que sus caracteristicas son bastantes diferentes a las de Barolo y Grignolino
+* Como podemos observar, la segunda componente discriminante brinda una buena separacion entre Barolo y Grignolino, ya que estos se puede observar que estan separadas verticalmente a lo largo del eje LD2. Lo que nos dice que sus caractericticas pueden ser un poco similares y, por ende, obtenemos este resultado. Aunque se debe decir que estan mas cercanas entre si en el espacio de LD1 a comparacion que con Barbera.
 
 **CONCLUSION:**
-En general, el modelo de clasificacion propuesto funciona muy bien con un accuracy bastante alto y, por ende, bastante confiable. Ademas, dada la dimensionalidad presente en este conjunto de datos, el modelo LDA propuesto es eficiente por su simplicidad y computacionalmente eficiente.
+En general, el modelo de clasificacion propuesto funciona muy bien con un accuracy alto y, por ende, bastante confiable. En comparacion con el modelo QDA explorado con fines de mostrar el sobreajuste que puede presentar por ser mas complejo, LDA generaliza mejor para este conjunto de datos sin sobreajustarlos y, ante datos no vistos, tendra un mejor desempeño que el modelo QDA. Ademas, dada la dimensionalidad presente en este conjunto de datos, el modelo LDA propuesto es eficiente por su simplicidad y computacionalmente eficiente para lo propuesto.
 
 <br>
 
