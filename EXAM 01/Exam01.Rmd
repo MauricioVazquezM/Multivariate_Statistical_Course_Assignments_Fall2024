@@ -157,7 +157,7 @@ En general, el modelo de clasificacion propuesto funciona muy bien con un accura
 
 <br>
 
-### Pregunta 2: los datos de diabetes de la tarea.
+### Pregunta 2: Utilice los datos de diabetes de la tarea.
 
 * ***a) Aplique al menos 3 métodos de clustering a los datos y explique en que difieren los resultados. ***
 * ***b) ¿Cuántos clusters deben reportarse como resultado? Justifique su respuesta.***
