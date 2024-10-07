@@ -1,8 +1,10 @@
 ---
-title: "Estadistica Aplicada III: Primer Examen Parcial "
+title: 'Estadistica Aplicada III: Primer Examen Parcial '
 author: "Mauricio Vazquez Moran"
 date: '2024-10-07'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ***Link del repositorio: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
@@ -33,7 +35,7 @@ library(caret)
 
 Se selecciono un clasificador del tipo Analisis Discriminante Lineal (LDA). Este tiene como objetivo encontrar en el espacio las caracteristicas que maximicen la separacion de clases. Se selecciono este modelo de clasificacion debido a que es un modelo simple que nos brinda alta interpretabilidad en sus resultados y que puede nos brinda un menor riesgo de sobreajuste a comparacion con un QDA, como mas a abajo lo analizaremos. Ademas, al tener un conjunto de datos pequeño en wine.rda, LDA tiene menor probabilidad de sobreajustarlo.
 
-Se se paro el conjunto de datos en uno de entrenamiento y uno de prueba para analizar los resultados de este modelo. Lo que se obtuvo fue lo siguiente:
+Se separo el conjunto de datos en uno de entrenamiento y uno de prueba para analizar los resultados de este modelo. Lo que se obtuvo fue lo siguiente:
 
 ```{r, echo=FALSE}
 # Seteando nuestro directorio de trabajo
@@ -86,7 +88,7 @@ print(paste("Accuracy del modelo LDA:", round(accuracy * 100, 2),"%"))
 **Analisis:**
 
 1. La matriz de confusion nos muestra que hubo una observacion de la clase2(Grignolino) que fue incorrectamente clasificada como clase1(Barolo).
-2. Por otro lado, la matriz de confusion nos muestra que una observacion de la clase3(Barbera) que fue incorrectamente clasificada como clase2(Barolo).
+2. Por otro lado, la matriz de confusion nos muestra que una observacion de la clase3(Barbera) fue incorrectamente clasificada como clase2(Barolo).
 3. La matriz de confusion nos muestra que una observacion de la clase2(Grignolino) fue incorrectamente clasificada como clase3(Barbera).
 4. Por lo mencionado arriba, se puede pensar que puede haber cierta superposicion entre las clases 2 y 3, esto debido a los errores capturados por la matriz de confusion.
 5. El accuracy del modelo fue del 94.44%. Esto es un muy buen resultado para el modelo de clasificacion LDA. Esta metrica nos indica que el modelo es lo suficientemente robusto para capturar las diferencias entre las 3 clases presentes en el dataset. Si bien es cierto que hay algunas clasificaciones equivocas, en general, el modelo da muy buenos resultados con este conjunto de datos.
@@ -134,7 +136,7 @@ Ahora, como se venia mencionando mas arriba, se puede notar que un modelo QDA ti
 
 <br>
 
-```{r, echo=FALSE}
+```{r fig.width=10, fig.height=3, echo=FALSE}
 # Ploteando
 ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
   geom_point(size = 3) +
@@ -151,7 +153,7 @@ ggplot(lda_df, aes(x = LD1, y = LD2, color = WineType)) +
 * Como podemos observar, la segunda componente discriminante brinda una buena separacion entre Barolo y Grignolino, ya que estos se puede observar que estan separadas verticalmente a lo largo del eje LD2. Lo que nos dice que sus caractericticas pueden ser un poco similares y, por ende, obtenemos este resultado. Aunque se debe decir que estan mas cercanas entre si en el espacio de LD1 a comparacion que con Barbera.
 
 **CONCLUSION:**
-En general, el modelo de clasificacion propuesto funciona muy bien con un accuracy alto y, por ende, bastante confiable. En comparacion con el modelo QDA explorado con fines de mostrar el sobreajuste que puede presentar por ser mas complejo, LDA generaliza mejor para este conjunto de datos sin sobreajustarlos y, ante datos no vistos, tendra un mejor desempeño que el modelo QDA. Ademas, dada la dimensionalidad presente en este conjunto de datos, el modelo LDA propuesto es eficiente por su simplicidad y computacionalmente eficiente para lo propuesto.
+En general, el modelo de clasificacion propuesto funciona muy bien con un accuracy alto y, por ende, bastante confiable. En comparacion con el modelo QDA, explorado con fines de mostrar el sobreajuste que puede presentar por ser mas complejo, LDA generaliza mejor para este conjunto de datos sin sobreajustarlos y, ante datos no vistos, tendra un mejor desempeño que el modelo QDA. Ademas, dada la dimensionalidad presente en este conjunto de datos, el modelo LDA propuesto es eficiente por su simplicidad y computacionalmente eficiente para lo propuesto.
 
 <br>
 
@@ -163,7 +165,6 @@ En general, el modelo de clasificacion propuesto funciona muy bien con un accura
 
 Se aplicaron los siguientes tres metodos de clustering jerarquico: single linkage, complete linkage y average linkage. Sabemos que single linkage determina la distancia entre dos grupos como la menor distancia entre un punto de un grupo y un punto del otro. Esto da lugar a clusters mas alargados, ya que los puntos cercanos se agrupan de manera no deseada. Por su parte, complete linkage define la distancia entre dos clusters como la mayor distancia entre un punto de un grupo y un punto del otro. Esto da a lugar a la creacion de clusters mas compactos y puede sacrificar informacion sobre la variabilidad dentro de los grupos. Finalemente, average linakge calcula la distancia entre dos grupos como el promedio de todas las distancias entre los puntos de ambos clusters. Este enfoque permite balancear mejor las distancias, evitar que los clusters se formen unicamente por su forma y puede ser computacionalmente costoso.
 
-<br>
 ```{r, echo=FALSE}
 # Cargando data
 setwd("~/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/EXAM 01")
@@ -177,7 +178,7 @@ data<- diabetes_df[, -which(names(diabetes_df) == "class")]
 diss_matrix <- dist(data, method="euclidean")
 ```
 
-```{r, echo=FALSE}
+```{r fig.width=10, fig.height=5, echo=FALSE}
 # Haciendo clustering jerarquico usando el metodo de single-linkage
 hc1 <- hclust(diss_matrix, method="single")
 
@@ -187,10 +188,7 @@ main = "Dendrograma Single-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
 ```
 
-<br>
-
-
-```{r, echo=FALSE}
+```{r fig.width=10, fig.height=5, echo=FALSE}
 # Haciendo clustering jerarquico usando el metodo de complete-linkage
 hc2 <- hclust(diss_matrix, method="complete")
 
@@ -200,20 +198,25 @@ main = "Dendrograma Complete-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
 ```
 
-<br>
-
-
-
-```{r, echo=FALSE}
+```{r fig.width=10, fig.height=5, echo=FALSE}
 # Haciendo clustering jerarquico usando el metodo de average-linkage
 hc3 <- hclust(diss_matrix, method="average")
 
 # Ploteando 
-plot(hc2, cex=0.6, hang=-1,
+plot(hc3, cex=0.6, hang=-1,
 main = "Dendrograma Average-Linkage",
 sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
 ```
 
 <br>
 
+**Analisis:**
+
+1. En primera lugar, se puede observar que el metodo de single-linkage formo clusters mas pequeños y en forma de cadena. Esto sera adecuado en ciertos casos, pero podria generar resultados menos intuitivos. Añadiendo a lo anterior, se notan patrones mas alargados y esto puede ser mas sensible a outliers. Por otro lado, los otros dos metodos permitieron una diferenciacion mas balanceada, con clusters mas equilibrados.
+2. En segundo lugar, al observar los dendogramas, notamos que ***con más de 3 clusters*** la variabilidad de los datos ya no se captura de manera tan clara, ya que los clusters se vuelven más pequeños y perdemos información. Por lo tanto, ***con 3 clusters*** obtenemos agrupaciones mas faciles de interpretar. Esto se compagina con lo analizado y comentado en la tarea con este conjunto de datos. Ademas, ***con 3 clusters*** garantizamos que el tamaño de los clusters no sea ni demasiado grande ni demasiado pequeño, evitando la pérdida de información y asegurando que los clusters sean significativos.
+3. En tercer lugar, se observan muchos cluster pequeños en alturas bajas en single-linkage. Por su parte, se observa que las uniones ocurridas en complete-linkage son a mayores alturas en el dendograma. Finalmente, en average-linkage esta situacion se sucita a alturas medias. Lo mencionado en este punto hace sentido con lo explicado arriba sobre estos tres metodos de clustering jerarquico.
+4. En cuarto lugar, algo particular a resaltar es el balanceo mencionado en el punto uno. El metodo average-linkage brinda un buen balance entre ambos extremos. La estructura es equilibrada y menos compacta que complete-linkage. Esto causa un trade-off entre la compactacion de los clusters y la sensibilidad que pudiera haber por la distancia individual de los puntos.
+5. Finalmente, las ***decisiones subjetivas*** tomadas fueron:
+    * La decision de utilizar los tres metodos de clustering jerarquico. Se pudo haber optado, en lugar de alguno de estos, por K-medias. Sin embargo, basado en cumplir con el objetivo de la comparacion de los metodos, me parecio mejor utlizar estos tres metodos. 
+    * El corte del dendograma. La elección del punto en el que se corta el dendrograma es subjetiva, aunque puede basarse en la intuición para identificar dónde hay una clara separación entre clusters.
 

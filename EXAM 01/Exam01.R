@@ -116,5 +116,37 @@ prin(paste("F1-Score del modelo LDA:", round(f1_score * 100, 2), "%\n"))
 
 
 ###### Ejercicio 2 ######
+# Cargando data
+setwd("~/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/EXAM 01")
 load("diabetes.rda")
 diabetes_df <- as.data.frame(diabetes)
+
+# Quitando la columna class
+data<- diabetes_df[, -which(names(diabetes_df) == "class")]
+
+# Computando la distancia euclideana en el dataframe de diabetes
+diss_matrix <- dist(data, method="euclidean")
+
+# Haciendo clustering jerarquico usando el metodo de single-linkage
+hc1 <- hclust(diss_matrix, method="single")
+
+# Ploteando 
+plot(hc1, cex=0.6, hang=-1,
+     main = "Dendrograma Single-Linkage",
+     sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
+
+# Haciendo clustering jerarquico usando el metodo de complete-linkage
+hc2 <- hclust(diss_matrix, method="complete")
+
+# Ploteando 
+plot(hc2, cex=0.6, hang=-1,
+     main = "Dendrograma Complete-Linkage",
+     sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
+
+# Haciendo clustering jerarquico usando el metodo de average-linkage
+hc3 <- hclust(diss_matrix, method="average")
+
+# Ploteando 
+plot(hc2, cex=0.6, hang=-1,
+     main = "Dendrograma Average-Linkage",
+     sub = "Matriz de distancia Euclidiana sobre dataset diabetes", las=2)
