@@ -1,3 +1,5 @@
 # Ignore html created by R markdown
 *.html
 *.pdf
+*.csv
+*.names
