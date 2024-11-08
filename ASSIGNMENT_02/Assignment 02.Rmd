@@ -19,6 +19,7 @@ library(GGally)
 library(mclust)
 library(kableExtra)
 library(copula)
+library(gridExtra)
 ```
 
 ### (Izenman) Ex. 7.1: Modern Multivariate Statistical 
@@ -488,13 +489,22 @@ wine_data <- read.table(wine_data_path, header = TRUE, sep = ";", quote = "\"")
 # Cargar y transformar el conjunto de datos wine_data a pseudo-observaciones
 wine_data_pseudo <- as.data.frame(sapply(wine_data, function(x) rank(x) / (length(x) + 1)))
 
-# Generar un gráfico de pares con contornos de pseudo-cópula
+# Quedandonos con 7 columnas
+wine_data_subset <- wine_data_pseudo[, c("fixed.acidity", "volatile.acidity", "citric.acid", 
+                                         "residual.sugar", "chlorides", "free.sulfur.dioxide", 
+                                         "total.sulfur.dioxide")]
+
+# Generar un gráfico cópula
 ggpairs(
-  wine_data_pseudo,
-  lower = list(continuous = wrap("density", alpha = 0.7, color = "green")),
-  diag = list(continuous = wrap("barDiag", color = "grey")),
-  upper = list(continuous = wrap("cor", size = 5, color = "red"))
-)
+  wine_data_subset,
+  lower = list(continuous = wrap("density", alpha = 0.7, color = "blue")),
+  diag = list(continuous = wrap("barDiag", color = "grey", bins = 10)),
+  upper = list(continuous = wrap("cor", size = 2, color = "red"))
+) + 
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.y = element_text(angle = 0) 
+  )
 ```
 
 <br>
@@ -503,8 +513,27 @@ ggpairs(
 
 * *URAN3: Exploratory copula choices for the three-dimensional uranium data:* Consider as in Example 2.2 the three-dimensional subset of the *uranium* data set contained in the R package `copula` with variables Cobalt (Co), Titanium (Ti) and Scandium (Sc). As in Example 3.4 transform the original data to the copula scale using marginal empirical distributions. Then explore the empirical normalized contour plots for all pairs of variables and suggest appropriate parametric pair copula families. Check your choices by comparing the fitted to the empirical normalized contour plots.
 
-```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+```{r fig.align='center', fig.width=8, fig.height=8, echo=FALSE}
+# Cargando data uranium
+data(uranium, package = 'copula')
 
+# Transformar los datos al "copula scale" usando distribuciones empíricas marginales
+uranium_pseudo <- as.data.frame(sapply(uranium, function(x) rank(x) / (length(x) + 1)))
+
+# Quedandonos con 3 columnas
+uranium_data_subset <- uranium_pseudo[, c("Co", "K","Cs")]
+
+# Grafico copula
+ggpairs(
+  uranium_data_subset,
+  lower = list(continuous = wrap("density", alpha = 0.7, color = "blue")),
+  diag = list(continuous = wrap("barDiag", color = "grey", bins = 10)),
+  upper = list(continuous = wrap("cor", size = 3, color = "red"))
+) +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.y = element_text(angle = 0)
+  )
 ```
 
 <br>
@@ -513,7 +542,27 @@ ggpairs(
 
 * *ABALONE3: Exploratory copula choices for the three-dimensional abalone data:* Consider as in Example 2.3 the three-dimensional subset of the *abalone* data set contained in the R package `PivotalR` with variables *shucked*, *viscera*, and *shell*. As in Example 3.4 transform the original data to the copula scale using marginal empirical distributions. Then explore the empirical normalized contour plots for all pairs of variables and suggest appropriate parametric pair copula families. Check your choices by comparing the fitted to the empirical normalized contour plots.
 
-```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+```{r fig.align='center', fig.width=8, fig.height=8, echo=FALSE}
+# Path
+file_path <- "C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_02/abalone.data"
+
+# Leyendo el archivo
+abalone_data <- read.table(file_path, sep = ",", header = FALSE)
+
+# Transformar los datos al "copula scale" usando distribuciones empíricas marginales
+abalone_pseudo <- as.data.frame(sapply(abalone_data, function(x) rank(x) / (length(x) + 1)))
+
+# Grafico copula
+ggpairs(
+  abalone_pseudo,
+  lower = list(continuous = wrap("density", alpha = 0.7, color = "blue")),
+  diag = list(continuous = wrap("barDiag", color = "grey", bins = 10)),
+  upper = list(continuous = wrap("cor", size = 3, color = "red"))
+) +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.y = element_text(angle = 0)
+  )
 
 ```
 
