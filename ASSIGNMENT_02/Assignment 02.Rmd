@@ -288,12 +288,55 @@ cat("¿B es semidefinida positiva?:", all(eigenvalues >= 0), "\n")
 
 * **Check book**
 
+***Respuesta en pdf anexo***
+
 ### (Johnson & Wichern) Ex. 8.12: Applied Multivariate Statistical Analysis 
 
 * Consider the air-pollution data listed in Table 1.5. Your job is to summarize these data in fewer than \( p = 7 \) dimensions if possible. Conduct a principal component analysis of the data using both the covariance matrix \( \mathbf{S} \) and the correlation matrix \( \mathbf{R} \). What have you learned? Does it make any difference which matrix is chosen for analysis? Can the data be summarized in three or fewer dimensions? Can you interpret the principal components?
 
 ```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Datos del ejercicio
+data <- data.frame(
+  Total_population = c(5.935, 1.523, 2.599, 4.009, 4.687, 8.044, 2.766, 6.538, 6.451, 3.314, 3.777, 1.530, 2.768, 6.585),
+  Median_school_years = c(14.2, 13.1, 12.7, 15.2, 14.7, 15.6, 13.3, 17.0, 12.9, 12.2, 13.0, 13.8, 13.6, 14.9),
+  Total_employment = c(2.265, 0.597, 1.237, 1.649, 2.312, 3.641, 1.244, 2.618, 3.147, 1.606, 2.119, 0.798, 1.336, 2.763),
+  Health_services_employment = c(2.27, 0.75, 1.11, 0.81, 2.5, 4.51, 1.03, 2.39, 5.52, 2.18, 2.83, 0.84, 1.75, 1.91),
+  Median_value_home = c(2.91, 2.62, 1.72, 3.02, 2.22, 2.36, 1.97, 1.85, 2.01, 1.82, 1.80, 4.25, 2.64, 3.17)
+)
 
+# Escalar los datos para el PCA usando la matriz de correlación
+scaled_data <- scale(data)
+
+# 1. PCA usando la matriz de correlación
+pca_corr <- prcomp(scaled_data, scale = TRUE)
+summary(pca_corr)
+
+# Varianza explicada por los componentes principales
+var_exp_corr <- pca_corr$sdev^2 / sum(pca_corr$sdev^2)
+var_exp_corr
+
+# 2. PCA usando la matriz de covarianza
+pca_cov <- prcomp(data, scale = FALSE)
+summary(pca_cov)
+
+# Varianza explicada por los componentes principales
+var_exp_cov <- pca_cov$sdev^2 / sum(pca_cov$sdev^2)
+var_exp_cov
+
+# 3. Visualización de los resultados
+# Scree Plot
+screeplot(pca_corr, type = "lines", main = "Scree Plot (Correlation Matrix)")
+screeplot(pca_cov, type = "lines", main = "Scree Plot (Covariance Matrix)")
+
+# Cargas de los componentes principales
+loadings_corr <- pca_corr$rotation
+loadings_cov <- pca_cov$rotation
+
+print("Cargas usando matriz de correlación:")
+print(loadings_corr)
+
+print("Cargas usando matriz de covarianza:")
+print(loadings_cov)
 ```
 
 <br>
@@ -303,7 +346,64 @@ cat("¿B es semidefinida positiva?:", all(eigenvalues >= 0), "\n")
 * Table 12.12 gives the road distances between 12 Wisconsin cities and cities in neighboring states. Locate the cities in \( q = 1, 2, \) and \( 3 \) dimensions using multidimensional scaling. Plot the minimum stress \( (q) \) versus \( q \) and interpret the graph. Compare the two-dimensional multidimensional scaling configuration with the locations of the cities on a map from an atlas.
 
 ```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Datos del ejercicio (Tabla 12.12): Matriz de distancias entre ciudades de Wisconsin
+distances <- matrix(c(
+  0, 107, 127, 141, 129, 230, 232, 210, 340, 180, 334, 325,
+  107, 0, 162, 105, 81, 244, 250, 192, 326, 151, 328, 321,
+  127, 162, 0, 160, 103, 225, 155, 269, 322, 293, 358, 343,
+  141, 105, 160, 0, 57, 266, 251, 181, 300, 95, 278, 261,
+  129, 81, 103, 57, 0, 210, 196, 141, 242, 136, 257, 240,
+  230, 244, 225, 266, 210, 0, 129, 70, 205, 354, 91, 106,
+  232, 250, 155, 251, 196, 129, 0, 199, 105, 324, 53, 68,
+  210, 192, 269, 181, 141, 70, 199, 0, 153, 295, 120, 133,
+  340, 326, 322, 300, 242, 205, 105, 153, 0, 431, 156, 169,
+  180, 151, 293, 95, 136, 354, 324, 295, 431, 0, 389, 368,
+  334, 328, 358, 278, 257, 91, 53, 120, 156, 389, 0, 33,
+  325, 321, 343, 261, 240, 106, 68, 133, 169, 368, 33, 0
+), nrow = 12, ncol = 12, byrow = TRUE)
 
+# Asignamos los nombres de las ciudades
+cities <- c("Milwaukee", "Madison", "Green_Bay", "Kenosha", "Racine", "La_Crosse", 
+            "Eau_Claire", "Wausau", "Superior", "Beloit", "Rockford", "Chicago")
+
+rownames(distances) <- cities
+colnames(distances) <- cities
+
+# 1. Aplicación del MDS para q = 1, 2, 3 dimensiones
+mds_1d <- isoMDS(distances, k = 1)
+mds_2d <- isoMDS(distances, k = 2)
+mds_3d <- isoMDS(distances, k = 3)
+
+# 2. Calcular el stress para q = 1, 2, 3
+stress_1d <- mds_1d$stress
+stress_2d <- mds_2d$stress
+stress_3d <- mds_3d$stress
+
+# Crear un data frame para el gráfico de stress
+stress_values <- data.frame(
+  q = 1:3,
+  stress = c(stress_1d, stress_2d, stress_3d)
+)
+
+# Graficar el stress vs. q
+ggplot(stress_values, aes(x = q, y = stress)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Stress vs. Dimensión (q)", x = "Dimensión (q)", y = "Stress") +
+  theme_minimal()
+
+# 3. Comparar la configuración bidimensional con el mapa real
+mds_2d_points <- data.frame(mds_2d$points)
+colnames(mds_2d_points) <- c("Dim1", "Dim2")
+mds_2d_points$City <- cities
+
+# Graficar la configuración bidimensional
+ggplot(mds_2d_points, aes(x = Dim1, y = Dim2, label = City)) +
+  geom_point() +
+  geom_text(vjust = -0.5) +
+  labs(title = "Configuración MDS Bidimensional de Ciudades",
+       x = "Dimensión 1", y = "Dimensión 2") +
+  theme_minimal()
 ```
 
 <br>
@@ -314,7 +414,63 @@ cat("¿B es semidefinida positiva?:", all(eigenvalues >= 0), "\n")
 * Table 12.13 on page 744 gives the “distances” between certain archaeological sites from different periods, based upon the frequencies of different types of potsherds found at the sites. Given these distances, determine the coordinates of the sites in \( q = 3, 4, \) and \( 5 \) dimensions using multidimensional scaling. Plot the minimum stress \( (q) \) versus \( q \) and interpret the graph. If possible, locate the sites in two dimensions (the first two principal components) using the coordinates for the \( q = 5 \)-dimensional solution. (Treat the sites as variables.) Noting the periods associated with the sites, interpret the two-dimensional configuration.
 
 ```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Datos del ejercicio (Tabla 12.13): Matriz de "distancias" entre sitios arqueológicos
+distances <- matrix(c(
+  0, 3.4, 2.9, 2.2, 3.8, 4.6, 4.0, 5.7,
+  3.4, 0, 1.2, 3.5, 2.1, 4.5, 3.1, 5.8,
+  2.9, 1.2, 0, 2.9, 3.1, 4.2, 3.3, 5.5,
+  2.2, 3.5, 2.9, 0, 4.4, 5.1, 4.7, 6.3,
+  3.8, 2.1, 3.1, 4.4, 0, 2.8, 1.9, 3.4,
+  4.6, 4.5, 4.2, 5.1, 2.8, 0, 2.7, 4.1,
+  4.0, 3.1, 3.3, 4.7, 1.9, 2.7, 0, 3.2,
+  5.7, 5.8, 5.5, 6.3, 3.4, 4.1, 3.2, 0
+), nrow = 8, ncol = 8, byrow = TRUE)
 
+# Asignamos los nombres de los sitios arqueológicos
+sites <- c("Site1", "Site2", "Site3", "Site4", "Site5", "Site6", "Site7", "Site8")
+
+rownames(distances) <- sites
+colnames(distances) <- sites
+
+# 1. Aplicación del MDS para q = 3, 4, 5 dimensiones
+mds_3d <- isoMDS(distances, k = 3)
+mds_4d <- isoMDS(distances, k = 4)
+mds_5d <- isoMDS(distances, k = 5)
+
+# 2. Calcular el stress para q = 3, 4, 5
+stress_3d <- mds_3d$stress
+stress_4d <- mds_4d$stress
+stress_5d <- mds_5d$stress
+
+# Crear un data frame para el gráfico de stress
+stress_values <- data.frame(
+  q = 3:5,
+  stress = c(stress_3d, stress_4d, stress_5d)
+)
+
+# Graficar el stress vs. q
+ggplot(stress_values, aes(x = q, y = stress)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Stress vs. Dimensión (q)", x = "Dimensión (q)", y = "Stress") +
+  theme_minimal()
+
+# 3. Proyección a dos dimensiones usando PCA de la solución de q = 5
+mds_5d_points <- as.data.frame(mds_5d$points)
+colnames(mds_5d_points) <- paste0("Dim", 1:5)
+
+# Aplicamos PCA a los puntos en 5 dimensiones
+pca_result <- prcomp(mds_5d_points, scale. = TRUE)
+pca_2d <- data.frame(pca_result$x[, 1:2])
+pca_2d$Site <- sites
+
+# Graficar la configuración bidimensional
+ggplot(pca_2d, aes(x = PC1, y = PC2, label = Site)) +
+  geom_point() +
+  geom_text(vjust = -0.5) +
+  labs(title = "Proyección PCA de la Configuración MDS en 2D",
+       x = "Componente Principal 1", y = "Componente Principal 2") +
+  theme_minimal()
 ```
 
 <br>
