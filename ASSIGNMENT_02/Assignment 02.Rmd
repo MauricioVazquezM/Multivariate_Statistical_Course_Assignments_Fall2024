@@ -87,21 +87,139 @@ print(eigenvectors_cor)
 
 * In the file `turtles.txt`, there are three variables, length, width, and height, of the carapaces of 48 painted turtles, 24 female and 24 male. Take logarithms of all three variables. Estimate the mean vector and covariance matrix of the male turtles and of the female turtles separately. Find the eigenvalues and eigenvectors of each estimated covariance matrix and carry out a PCA of each data set. Find an expression for the volume of a turtle carapace for males and for females. (Hint: use the fact that the variables are logarithms of the original measurements.) Compare volumes of male and female carapaces.
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Paso 1: Cargar y preparar los datos
+load("turtles.rda")
+turtles$log_length <- log(turtles$length)
+turtles$log_width <- log(turtles$width)
+turtles$log_height <- log(turtles$height)
+
+# Dividimos los datos entre machos y hembras
+male_turtles <- subset(turtles, sex == "m")
+female_turtles <- subset(turtles, sex == "f")
+
+# Paso 2: Calcular el vector de medias y la matriz de covarianza para cada grupo
+mean_male <- colMeans(male_turtles[, c("log_length", "log_width", "log_height")])
+mean_female <- colMeans(female_turtles[, c("log_length", "log_width", "log_height")])
+
+cov_male <- cov(male_turtles[, c("log_length", "log_width", "log_height")])
+cov_female <- cov(female_turtles[, c("log_length", "log_width", "log_height")])
+
+# Paso 3: Realizar PCA en cada conjunto de datos
+# PCA para tortugas machos
+pca_male <- prcomp(male_turtles[, c("log_length", "log_width", "log_height")], scale. = FALSE)
+eigenvalues_male <- pca_male$sdev^2
+eigenvectors_male <- pca_male$rotation
+
+# PCA para tortugas hembras
+pca_female <- prcomp(female_turtles[, c("log_length", "log_width", "log_height")], scale. = FALSE)
+eigenvalues_female <- pca_female$sdev^2
+eigenvectors_female <- pca_female$rotation
+
+# Paso 4: Calcular el volumen del caparazón
+log_volume_male <- rowSums(male_turtles[, c("log_length", "log_width", "log_height")])
+log_volume_female <- rowSums(female_turtles[, c("log_length", "log_width", "log_height")])
+
+mean_volume_male <- exp(mean(log_volume_male))
+mean_volume_female <- exp(mean(log_volume_female))
+
+# Paso 5: Imprimir resultados y comparar volúmenes
+cat("Vector de medias (machos):", mean_male, "\n")
+cat("Vector de medias (hembras):", mean_female, "\n")
+
+cat("Matriz de covarianza (machos):\n")
+print(cov_male)
+cat("Matriz de covarianza (hembras):\n")
+print(cov_female)
+
+cat("Valores propios (machos):", eigenvalues_male, "\n")
+cat("Vectores propios (machos):\n")
+print(eigenvectors_male)
+
+cat("Valores propios (hembras):", eigenvalues_female, "\n")
+cat("Vectores propios (hembras):\n")
+print(eigenvectors_female)
+
+cat("Volumen promedio del caparazón (machos):", mean_volume_male, "\n")
+cat("Volumen promedio del caparazón (hembras):", mean_volume_female, "\n")
+
+# Comparación de volúmenes
+cat("Diferencia de volumen entre machos y hembras:", -(mean_volume_male - mean_volume_female), "\n")
+```
+
+<br>
+
 ### (Izenman) Ex. 7.10: Modern Multivariate Statistical Techniques
 
 * Consider an \( (r \times r) \) correlation matrix with the same correlation, \( \rho \), say, in the off-diagonal entries. Find the eigenvalues and eigenvectors of this matrix when \( r = 2, 3, 4 \). Generalize your results to any \( r \) variables. As examples, set \( \rho = 0.1, 0.3, 0.5, 0.7, 0.9 \).
+
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Función para construir la matriz de correlación con correlación constante 'p' en entradas fuera de la diagonal
+build_correlation_matrix <- function(r, p) {
+  matrix <- matrix(p, nrow = r, ncol = r)
+  diag(matrix) <- 1
+  return(matrix)
+}
+
+p_values <- c(0.1, 0.3, 0.5, 0.7, 0.9)
+r_values <- c(2, 3, 4)
+
+# Cálculo de valores y vectores propios para cada combinación de r y p
+for (r in r_values) {
+  cat("r =", r, "\n")
+  for (p in p_values) {
+    R <- build_correlation_matrix(r, p)
+    
+    eigen_result <- eigen(R)
+    eigenvalues <- eigen_result$values
+    eigenvectors <- eigen_result$vectors
+    
+    cat("p =", p, "\n")
+    cat("Eigenvalues:\n")
+    print(eigenvalues)
+    cat("Eigenvectors:\n")
+    print(eigenvectors)
+    cat("\n")
+  }
+}
+
+# Observación general
+cat("Resultado general:\n")
+cat("Un valor propio es 1 + (r-1)*p, con el vector propio (1, 1, ..., 1) / sqrt(r).\n")
+cat("Los otros (r-1) valores propios son 1 - p, con vectores propios que suman cero.\n")
+```
+
+<br>
 
 ### (Izenman) Ex. 13.1: Modern Multivariate Statistical Techniques
 
 * Consider the color-stimuli experiment outlined in Section 13.2.1. The similarity ratings are given in the file `color-stimuli` on the book's website. Carry out a classical scaling of the data and show that the solution is a “color circle” ranging from violet (434 mmu) to blue (472 mmu) to green (504 mmu) to yellow (584 mmu) to red (674 mmu). Compare your solution to the nonmetric scaling solution given in Figure 13.3.
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
+
 ### (Izenman) Ex. 13.2: Modern Multivariate Statistical Techniques
 
 * Consider the Morse-code experiment outlined in Section 13.2.2. The file `Morse-code` on the book's website gives a table of the percentages of times that a signal corresponding to the row label was identified as being the same as the signal corresponding to the column label. A row of this table shows the confusion rate for that particular Morse-code signal when presented *before* each of the column signals, whereas a column of the table shows the confusion rate for that particular signal when presented *after* each of the row signals. This table of confusion rates is not symmetric and the diagonal elements are not each 100%. Now, every square matrix \( M \) can be decomposed uniquely into the sum of two orthogonal matrices, \( M = A + B \), where \( A = \frac{1}{2}(M + M^{T}) \) is symmetric \( (A^{T} = A) \), and \( B = \frac{1}{2}(M - M^{T}) \) is skew-symmetric \( (B^{T} = -B) \) with zero diagonal entries.Find the decomposition for the Mose-code data. Ignore that part of the Morse-code data provided by \( \mathbf{B} \) and carry out a nonmetric scaling only of the symmetric part \( \mathbf{A} \). Decide how many dimensions you think are appropriate for representing the data.
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
+
 ### (Izenman) Ex. 13.4: Modern Multivariate Statistical Techniques
 
 * Show that the dissimilarities in the matrix \( \Delta \) are Euclidean distances if and only if the doubly centered matrix \( \mathbf{B} = \mathbf{H} \mathbf{A} \mathbf{H} \) is nonnegative definite, where \( \mathbf{A} \) is given in the classical scaling algorithm of Table 13.5.
+
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
 
 ### (Johnson & Wichern) Ex. 8.9: Applied Multivariate Statistical Analysis 
 
@@ -111,31 +229,79 @@ print(eigenvectors_cor)
 
 * Consider the air-pollution data listed in Table 1.5. Your job is to summarize these data in fewer than \( p = 7 \) dimensions if possible. Conduct a principal component analysis of the data using both the covariance matrix \( \mathbf{S} \) and the correlation matrix \( \mathbf{R} \). What have you learned? Does it make any difference which matrix is chosen for analysis? Can the data be summarized in three or fewer dimensions? Can you interpret the principal components?
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
+
 ### (Johnson & Wichern) Ex. 12.18: Applied Multivariate Statistical Analysis 
 
 * Table 12.12 gives the road distances between 12 Wisconsin cities and cities in neighboring states. Locate the cities in \( q = 1, 2, \) and \( 3 \) dimensions using multidimensional scaling. Plot the minimum stress \( (q) \) versus \( q \) and interpret the graph. Compare the two-dimensional multidimensional scaling configuration with the locations of the cities on a map from an atlas.
+
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
 
 
 ### (Johnson & Wichern) Ex. 12.19: Applied Multivariate Statistical Analysis 
 
 * Table 12.13 on page 744 gives the “distances” between certain archaeological sites from different periods, based upon the frequencies of different types of potsherds found at the sites. Given these distances, determine the coordinates of the sites in \( q = 3, 4, \) and \( 5 \) dimensions using multidimensional scaling. Plot the minimum stress \( (q) \) versus \( q \) and interpret the graph. If possible, locate the sites in two dimensions (the first two principal components) using the coordinates for the \( q = 5 \)-dimensional solution. (Treat the sites as variables.) Noting the periods associated with the sites, interpret the two-dimensional configuration.
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
+
 ### (Czado) Ex. 3.3: Analyzing Dependent Data with Vine Copulas
 
 * *Exploratory bivariate copula choices for the seven-dimensional red wine data:* For the data set considered in Exercise 1.7 the pairs plot of the associated pseudo-copula data is given in Fig. 3.15. For each pair of variables propose a pair copula family.
+
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
 
 ### (Czado) Ex. 3.4: Analyzing Dependent Data with Vine Copulas
 
 * *URAN3: Exploratory copula choices for the three-dimensional uranium data:* Consider as in Example 2.2 the three-dimensional subset of the *uranium* data set contained in the R package `copula` with variables Cobalt (Co), Titanium (Ti) and Scandium (Sc). As in Example 3.4 transform the original data to the copula scale using marginal empirical distributions. Then explore the empirical normalized contour plots for all pairs of variables and suggest appropriate parametric pair copula families. Check your choices by comparing the fitted to the empirical normalized contour plots.
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
+
 ### (Czado) Ex. 3.5: Analyzing Dependent Data with Vine Copulas
 
 * *ABALONE3: Exploratory copula choices for the three-dimensional abalone data:* Consider as in Example 2.3 the three-dimensional subset of the *abalone* data set contained in the R package `PivotalR` with variables *shucked*, *viscera*, and *shell*. As in Example 3.4 transform the original data to the copula scale using marginal empirical distributions. Then explore the empirical normalized contour plots for all pairs of variables and suggest appropriate parametric pair copula families. Check your choices by comparing the fitted to the empirical normalized contour plots.
+
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
 
 ### (Czado) Ex. 3.6: Analyzing Dependent Data with Vine Copulas
 
 * *The effect of the degree of freedom in a bivariate Student’s t copula on the contour shapes:* For \( df = 2, \dots, 30 \) draw the normalized contour plots, when the association parameter is \( \rho = .7 \). Do the same for \( \rho = -.2 \). How do these plots change when you fix \( \tau = .7 \) and \( \tau = -.2 \), respectively.
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
+
 ### (Czado) Ex. 3.10: Analyzing Dependent Data with Vine Copulas
 
 * *Conditional distribution of the Clayton copula:* Derive and visualize the \( h \) functions \( C_{2|1}(u_2 | u_1 = .5) \) and \( C_{1|2}(u_1 | u_2 = .5) \) of a bivariate Clayton copula with a Kendall’s \( \tau = .5 \) and \( \tau = .8 \), respectively. Compare the two functions. Do the same for a 90° rotated Clayton copula.
+
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+
+```
+
+<br>
