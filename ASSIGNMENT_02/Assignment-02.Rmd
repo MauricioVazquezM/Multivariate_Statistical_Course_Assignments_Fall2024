@@ -542,7 +542,7 @@ ggpairs(
 
 * *ABALONE3: Exploratory copula choices for the three-dimensional abalone data:* Consider as in Example 2.3 the three-dimensional subset of the *abalone* data set contained in the R package `PivotalR` with variables *shucked*, *viscera*, and *shell*. As in Example 3.4 transform the original data to the copula scale using marginal empirical distributions. Then explore the empirical normalized contour plots for all pairs of variables and suggest appropriate parametric pair copula families. Check your choices by comparing the fitted to the empirical normalized contour plots.
 
-```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+```{r fig.align='center', fig.width=8, fig.height=8, echo=FALSE}
 # Path
 file_path <- "C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_02/abalone.data"
 
