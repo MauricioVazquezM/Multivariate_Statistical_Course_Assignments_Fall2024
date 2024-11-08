@@ -226,7 +226,32 @@ symbols(0, 0, circles = max(sqrt(rowSums(mds_result^2))), add = TRUE, inches = F
 * Consider the Morse-code experiment outlined in Section 13.2.2. The file `Morse-code` on the book's website gives a table of the percentages of times that a signal corresponding to the row label was identified as being the same as the signal corresponding to the column label. A row of this table shows the confusion rate for that particular Morse-code signal when presented *before* each of the column signals, whereas a column of the table shows the confusion rate for that particular signal when presented *after* each of the row signals. This table of confusion rates is not symmetric and the diagonal elements are not each 100%. Now, every square matrix \( M \) can be decomposed uniquely into the sum of two orthogonal matrices, \( M = A + B \), where \( A = \frac{1}{2}(M + M^{T}) \) is symmetric \( (A^{T} = A) \), and \( B = \frac{1}{2}(M - M^{T}) \) is skew-symmetric \( (B^{T} = -B) \) with zero diagonal entries.Find the decomposition for the Mose-code data. Ignore that part of the Morse-code data provided by \( \mathbf{B} \) and carry out a nonmetric scaling only of the symmetric part \( \mathbf{A} \). Decide how many dimensions you think are appropriate for representing the data.
 
 ```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Paso 1: Cargar los datos
+load("morse.rda")
 
+# Paso 2: Descomposición en parte simétrica y antisimétrica
+A <- 0.5 * (morse + t(morse))  # Parte simétrica
+B <- 0.5 * (morse - t(morse))  # Parte antisimétrica
+
+#cat("Matriz simétrica A:\n")
+#print(A)
+#cat("\nMatriz antisimétrica B:\n")
+#print(B)
+
+# Paso 3: Escalamiento no métrico en A
+# Convertir la matriz de similitudes en una matriz de distancias
+# (Suponemos que mayores valores indican mayor similitud)
+distance_matrix <- max(A) - A
+mds_nonmetric <- cmdscale(as.dist(distance_matrix), k = 2, eig = TRUE, add = TRUE)
+
+# Paso 4: Graficar los resultados 
+plot(mds_nonmetric$points, type = "n", xlab = "Dimensión 1", ylab = "Dimensión 2", main = "MDS No Métrica para Morse Code (Parte Simétrica)")
+text(mds_nonmetric$points, labels = rownames(morse), cex = 1.2)
+
+# Evaluar el número de dimensiones apropiado
+# Podemos revisar los eigenvalores para ver cuánta varianza se explica con cada dimensión
+cat("Eigenvalores de la MDS no métrica:\n")
+print(mds_nonmetric$eig)
 ```
 
 <br>
@@ -236,6 +261,24 @@ symbols(0, 0, circles = max(sqrt(rowSums(mds_result^2))), add = TRUE, inches = F
 * Show that the dissimilarities in the matrix \( \Delta \) are Euclidean distances if and only if the doubly centered matrix \( \mathbf{B} = \mathbf{H} \mathbf{A} \mathbf{H} \) is nonnegative definite, where \( \mathbf{A} \) is given in the classical scaling algorithm of Table 13.5.
 
 ```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Ejemplo de matriz de disimilitud
+A <- matrix(c(0, 1, 2, 1,
+              1, 0, 1, 2,
+              2, 1, 0, 1,
+              1, 2, 1, 0), nrow = 4, byrow = TRUE)
+
+# Construcción de la matriz H
+n <- nrow(A)
+H <- diag(n) - (1/n) * matrix(1, n, n)
+
+# Matriz doblemente centrada B = HAH
+B <- H %*% A %*% H
+
+# Verificar si B es semidefinida positiva
+eigenvalues <- eigen(B)$values
+cat("Valores propios de B:\n")
+print(eigenvalues)
+cat("¿B es semidefinida positiva?:", all(eigenvalues >= 0), "\n")
 
 ```
 
