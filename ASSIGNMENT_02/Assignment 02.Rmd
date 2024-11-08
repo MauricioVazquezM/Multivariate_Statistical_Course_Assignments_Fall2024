@@ -20,32 +20,63 @@ library(mclust)
 library(kableExtra)
 ```
 
-### (Izenman) Ex. 7.1: Modern Multivariate Statistical Techniques
+### (Izenman) Ex. 7.1: Modern Multivariate Statistical 
+
+* Generate a random sample of size \( n = 100 \) from a three-dimensional (\( r = 3 \)) Gaussian distribution, where one of the variables has very high variance (relative to the other two). Carry out PCA on these data using the covariance matrix and the correlation matrix. In each case, find the eigenvalues and eigenvectors, draw the scree plot, compute the PC scores, and plot all pairwise PC scores in a matrix plot. Compare results.
 
 ### (Izenman) Ex. 7.3: Modern Multivariate Statistical Techniques
 
+* In the file `turtles.txt`, there are three variables, length, width, and height, of the carapaces of 48 painted turtles, 24 female and 24 male. Take logarithms of all three variables. Estimate the mean vector and covariance matrix of the male turtles and of the female turtles separately. Find the eigenvalues and eigenvectors of each estimated covariance matrix and carry out a PCA of each data set. Find an expression for the volume of a turtle carapace for males and for females. (Hint: use the fact that the variables are logarithms of the original measurements.) Compare volumes of male and female carapaces.
+
 ### (Izenman) Ex. 7.10: Modern Multivariate Statistical Techniques
+
+* Consider an \( (r \times r) \) correlation matrix with the same correlation, \( \rho \), say, in the off-diagonal entries. Find the eigenvalues and eigenvectors of this matrix when \( r = 2, 3, 4 \). Generalize your results to any \( r \) variables. As examples, set \( \rho = 0.1, 0.3, 0.5, 0.7, 0.9 \).
 
 ### (Izenman) Ex. 13.1: Modern Multivariate Statistical Techniques
 
+* Consider the color-stimuli experiment outlined in Section 13.2.1. The similarity ratings are given in the file `color-stimuli` on the book's website. Carry out a classical scaling of the data and show that the solution is a “color circle” ranging from violet (434 mmu) to blue (472 mmu) to green (504 mmu) to yellow (584 mmu) to red (674 mmu). Compare your solution to the nonmetric scaling solution given in Figure 13.3.
+
 ### (Izenman) Ex. 13.2: Modern Multivariate Statistical Techniques
+
+* Consider the Morse-code experiment outlined in Section 13.2.2. The file `Morse-code` on the book's website gives a table of the percentages of times that a signal corresponding to the row label was identified as being the same as the signal corresponding to the column label. A row of this table shows the confusion rate for that particular Morse-code signal when presented *before* each of the column signals, whereas a column of the table shows the confusion rate for that particular signal when presented *after* each of the row signals. This table of confusion rates is not symmetric and the diagonal elements are not each 100%. Now, every square matrix \( M \) can be decomposed uniquely into the sum of two orthogonal matrices, \( M = A + B \), where \( A = \frac{1}{2}(M + M^{T}) \) is symmetric \( (A^{T} = A) \), and \( B = \frac{1}{2}(M - M^{T}) \) is skew-symmetric \( (B^{T} = -B) \) with zero diagonal entries.Find the decomposition for the Mose-code data. Ignore that part of the Morse-code data provided by \( \mathbf{B} \) and carry out a nonmetric scaling only of the symmetric part \( \mathbf{A} \). Decide how many dimensions you think are appropriate for representing the data.
 
 ### (Izenman) Ex. 13.4: Modern Multivariate Statistical Techniques
 
+* Show that the dissimilarities in the matrix \( \Delta \) are Euclidean distances if and only if the doubly centered matrix \( \mathbf{B} = \mathbf{H} \mathbf{A} \mathbf{H} \) is nonnegative definite, where \( \mathbf{A} \) is given in the classical scaling algorithm of Table 13.5.
+
 ### (Johnson & Wichern) Ex. 8.9: Applied Multivariate Statistical Analysis 
+
+* **Check book**
 
 ### (Johnson & Wichern) Ex. 8.12: Applied Multivariate Statistical Analysis 
 
+* Consider the air-pollution data listed in Table 1.5. Your job is to summarize these data in fewer than \( p = 7 \) dimensions if possible. Conduct a principal component analysis of the data using both the covariance matrix \( \mathbf{S} \) and the correlation matrix \( \mathbf{R} \). What have you learned? Does it make any difference which matrix is chosen for analysis? Can the data be summarized in three or fewer dimensions? Can you interpret the principal components?
+
 ### (Johnson & Wichern) Ex. 12.18: Applied Multivariate Statistical Analysis 
+
+* Table 12.12 gives the road distances between 12 Wisconsin cities and cities in neighboring states. Locate the cities in \( q = 1, 2, \) and \( 3 \) dimensions using multidimensional scaling. Plot the minimum stress \( (q) \) versus \( q \) and interpret the graph. Compare the two-dimensional multidimensional scaling configuration with the locations of the cities on a map from an atlas.
+
 
 ### (Johnson & Wichern) Ex. 12.19: Applied Multivariate Statistical Analysis 
 
+* Table 12.13 on page 744 gives the “distances” between certain archaeological sites from different periods, based upon the frequencies of different types of potsherds found at the sites. Given these distances, determine the coordinates of the sites in \( q = 3, 4, \) and \( 5 \) dimensions using multidimensional scaling. Plot the minimum stress \( (q) \) versus \( q \) and interpret the graph. If possible, locate the sites in two dimensions (the first two principal components) using the coordinates for the \( q = 5 \)-dimensional solution. (Treat the sites as variables.) Noting the periods associated with the sites, interpret the two-dimensional configuration.
+
 ### (Czado) Ex. 3.3: Analyzing Dependent Data with Vine Copulas
+
+* *Exploratory bivariate copula choices for the seven-dimensional red wine data:* For the data set considered in Exercise 1.7 the pairs plot of the associated pseudo-copula data is given in Fig. 3.15. For each pair of variables propose a pair copula family.
 
 ### (Czado) Ex. 3.4: Analyzing Dependent Data with Vine Copulas
 
+* *URAN3: Exploratory copula choices for the three-dimensional uranium data:* Consider as in Example 2.2 the three-dimensional subset of the *uranium* data set contained in the R package `copula` with variables Cobalt (Co), Titanium (Ti) and Scandium (Sc). As in Example 3.4 transform the original data to the copula scale using marginal empirical distributions. Then explore the empirical normalized contour plots for all pairs of variables and suggest appropriate parametric pair copula families. Check your choices by comparing the fitted to the empirical normalized contour plots.
+
 ### (Czado) Ex. 3.5: Analyzing Dependent Data with Vine Copulas
+
+* *ABALONE3: Exploratory copula choices for the three-dimensional abalone data:* Consider as in Example 2.3 the three-dimensional subset of the *abalone* data set contained in the R package `PivotalR` with variables *shucked*, *viscera*, and *shell*. As in Example 3.4 transform the original data to the copula scale using marginal empirical distributions. Then explore the empirical normalized contour plots for all pairs of variables and suggest appropriate parametric pair copula families. Check your choices by comparing the fitted to the empirical normalized contour plots.
 
 ### (Czado) Ex. 3.6: Analyzing Dependent Data with Vine Copulas
 
+* *The effect of the degree of freedom in a bivariate Student’s t copula on the contour shapes:* For \( df = 2, \dots, 30 \) draw the normalized contour plots, when the association parameter is \( \rho = .7 \). Do the same for \( \rho = -.2 \). How do these plots change when you fix \( \tau = .7 \) and \( \tau = -.2 \), respectively.
+
 ### (Czado) Ex. 3.10: Analyzing Dependent Data with Vine Copulas
+
+* *Conditional distribution of the Clayton copula:* Derive and visualize the \( h \) functions \( C_{2|1}(u_2 | u_1 = .5) \) and \( C_{1|2}(u_1 | u_2 = .5) \) of a bivariate Clayton copula with a Kendall’s \( \tau = .5 \) and \( \tau = .8 \), respectively. Compare the two functions. Do the same for a 90° rotated Clayton copula.
