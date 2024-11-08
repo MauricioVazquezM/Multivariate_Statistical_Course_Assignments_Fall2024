@@ -1,0 +1,51 @@
+---
+title: "Assignment 02"
+author: "Mauricio Vazquez & Mariana Luna"
+date: '2024-11-08'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+***Repository link: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, fig.width=10)
+
+# Libraries
+library(MASS)  
+library(ggplot2)
+library(GGally)
+library(mclust)
+library(kableExtra)
+```
+
+### (Izenman) Ex. 7.1: Modern Multivariate Statistical Techniques
+
+### (Izenman) Ex. 7.3: Modern Multivariate Statistical Techniques
+
+### (Izenman) Ex. 7.10: Modern Multivariate Statistical Techniques
+
+### (Izenman) Ex. 13.1: Modern Multivariate Statistical Techniques
+
+### (Izenman) Ex. 13.2: Modern Multivariate Statistical Techniques
+
+### (Izenman) Ex. 13.4: Modern Multivariate Statistical Techniques
+
+### (Johnson & Wichern) Ex. 8.9: Applied Multivariate Statistical Analysis 
+
+### (Johnson & Wichern) Ex. 8.12: Applied Multivariate Statistical Analysis 
+
+### (Johnson & Wichern) Ex. 12.18: Applied Multivariate Statistical Analysis 
+
+### (Johnson & Wichern) Ex. 12.19: Applied Multivariate Statistical Analysis 
+
+### (Czado) Ex. 3.3: Analyzing Dependent Data with Vine Copulas
+
+### (Czado) Ex. 3.4: Analyzing Dependent Data with Vine Copulas
+
+### (Czado) Ex. 3.5: Analyzing Dependent Data with Vine Copulas
+
+### (Czado) Ex. 3.6: Analyzing Dependent Data with Vine Copulas
+
+### (Czado) Ex. 3.10: Analyzing Dependent Data with Vine Copulas
