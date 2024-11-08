@@ -18,6 +18,7 @@ library(ggplot2)
 library(GGally)
 library(mclust)
 library(kableExtra)
+library(copula)
 ```
 
 ### (Izenman) Ex. 7.1: Modern Multivariate Statistical 
@@ -479,8 +480,21 @@ ggplot(pca_2d, aes(x = PC1, y = PC2, label = Site)) +
 
 * *Exploratory bivariate copula choices for the seven-dimensional red wine data:* For the data set considered in Exercise 1.7 the pairs plot of the associated pseudo-copula data is given in Fig. 3.15. For each pair of variables propose a pair copula family.
 
-```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+```{r fig.align='center', fig.width=8, fig.height=8, echo=FALSE}
+# Leyendo datos
+wine_data_path <- "C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_02/winequality-red.txt"
+wine_data <- read.table(wine_data_path, header = TRUE, sep = ";", quote = "\"")
 
+# Cargar y transformar el conjunto de datos wine_data a pseudo-observaciones
+wine_data_pseudo <- as.data.frame(sapply(wine_data, function(x) rank(x) / (length(x) + 1)))
+
+# Generar un gráfico de pares con contornos de pseudo-cópula
+ggpairs(
+  wine_data_pseudo,
+  lower = list(continuous = wrap("density", alpha = 0.7, color = "green")),
+  diag = list(continuous = wrap("barDiag", color = "grey")),
+  upper = list(continuous = wrap("cor", size = 5, color = "red"))
+)
 ```
 
 <br>

@@ -409,8 +409,25 @@ ggplot(pca_2d, aes(x = PC1, y = PC2, label = Site)) +
   theme_minimal()
 
 # ---------------------------- PREGUNTA 3.3 ---------------------------- #
+# Librerias necesarias para esta pregunta
+library(copula)
+library(ggplot2)
+library(GGally)
 
+# Leyendo datos
+wine_data_path <- "C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_02/winequality-red.txt"
+wine_data <- read.table(wine_data_path, header = TRUE, sep = ";", quote = "\"")
 
+# Cargar y transformar el conjunto de datos wine_data a pseudo-observaciones
+wine_data_pseudo <- as.data.frame(sapply(wine_data, function(x) rank(x) / (length(x) + 1)))
+
+# Generar un gráfico de pares con contornos de pseudo-cópula
+ggpairs(
+  wine_data_pseudo,
+  lower = list(continuous = wrap("density", alpha = 0.7, color = "green")),
+  diag = list(continuous = wrap("barDiag", color = "grey")),
+  upper = list(continuous = wrap("cor", size = 5, color = "red"))
+)
 
 # ---------------------------- PREGUNTA 3.4 ---------------------------- #
 
