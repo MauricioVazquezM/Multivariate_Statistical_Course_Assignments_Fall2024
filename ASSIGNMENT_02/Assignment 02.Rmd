@@ -24,6 +24,65 @@ library(kableExtra)
 
 * Generate a random sample of size \( n = 100 \) from a three-dimensional (\( r = 3 \)) Gaussian distribution, where one of the variables has very high variance (relative to the other two). Carry out PCA on these data using the covariance matrix and the correlation matrix. In each case, find the eigenvalues and eigenvectors, draw the scree plot, compute the PC scores, and plot all pairwise PC scores in a matrix plot. Compare results.
 
+```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+# Paso 1: Configuración y generación de datos
+set.seed(42) # Para reproducibilidad
+n <- 100
+mean <- c(0, 0, 0) # Media de la distribución
+cov_matrix <- matrix(c(100, 10, 10, 
+                       10, 50, 10, 
+                       10, 10, 30), nrow = 3) # Matriz de covarianza
+
+# Generamos los datos aleatorios
+data <- mvrnorm(n, mu = mean, Sigma = cov_matrix)
+colnames(data) <- c("X1", "X2", "X3")
+
+# Paso 2: PCA con la matriz de covarianza
+pca_cov <- prcomp(data, scale. = FALSE) # scale. = FALSE usa la matriz de covarianza
+eigenvalues_cov <- pca_cov$sdev^2 # Valores propios
+eigenvectors_cov <- pca_cov$rotation # Vectores propios
+
+# Paso 3: PCA con la matriz de correlación
+pca_cor <- prcomp(data, scale. = TRUE) # scale. = TRUE usa la matriz de correlación
+eigenvalues_cor <- pca_cor$sdev^2 # Valores propios
+eigenvectors_cor <- pca_cor$rotation # Vectores propios
+
+# Paso 4: Graficar Scree Plots
+par(mfrow=c(1, 2))
+
+# Scree plot para matriz de covarianza
+plot(eigenvalues_cov, type="b", xlab="Component", ylab="Eigenvalue",
+     main="Scree Plot (Covariance Matrix)")
+
+# Scree plot para matriz de correlación
+plot(eigenvalues_cor, type="b", xlab="Component", ylab="Eigenvalue",
+     main="Scree Plot (Correlation Matrix)")
+
+# Paso 5: Calcular y graficar los puntajes de las componentes principales
+scores_cov <- pca_cov$x # Puntajes de PCA con matriz de covarianza
+scores_cor <- pca_cor$x # Puntajes de PCA con matriz de correlación
+
+# Paso 6: Graficar matriz de pares para los puntajes de componentes principales
+par(mfrow=c(1, 2))
+
+# Pares de gráficos para matriz de covarianza
+pairs(scores_cov, main="Pairwise PC Scores (Covariance Matrix)")
+
+# Pares de gráficos para matriz de correlación
+pairs(scores_cor, main="Pairwise PC Scores (Correlation Matrix)")
+
+# Comparación de resultados
+cat("Eigenvalues (Covariance Matrix):", eigenvalues_cov, "\n")
+cat("Eigenvectors (Covariance Matrix):\n")
+print(eigenvectors_cov)
+
+cat("Eigenvalues (Correlation Matrix):", eigenvalues_cor, "\n")
+cat("Eigenvectors (Correlation Matrix):\n")
+print(eigenvectors_cor)
+```
+
+<br>
+
 ### (Izenman) Ex. 7.3: Modern Multivariate Statistical Techniques
 
 * In the file `turtles.txt`, there are three variables, length, width, and height, of the carapaces of 48 painted turtles, 24 female and 24 male. Take logarithms of all three variables. Estimate the mean vector and covariance matrix of the male turtles and of the female turtles separately. Find the eigenvalues and eigenvectors of each estimated covariance matrix and carry out a PCA of each data set. Find an expression for the volume of a turtle carapace for males and for females. (Hint: use the fact that the variables are logarithms of the original measurements.) Compare volumes of male and female carapaces.
