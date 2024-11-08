@@ -563,7 +563,6 @@ ggpairs(
     axis.text.x = element_text(angle = 90, hjust = 1),
     axis.text.y = element_text(angle = 0)
   )
-
 ```
 
 <br>
