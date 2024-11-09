@@ -5,6 +5,7 @@
 library(tidyverse)
 library(MASS)
 library(ggplot2)
+library(GGally)
 
 # ---------------------------- PREGUNTA 7.1 ---------------------------- #
 
@@ -527,9 +528,128 @@ ggpairs(
 
 # ---------------------------- PREGUNTA 3.6 ---------------------------- #
 
+# Parámetros a definir
+rhos <- c(0.7, -0.2)  # Correlaciones a evaluar
+dfs <- seq(2, 30, by = 2)  # Grados de libertad de 2 a 30
+
+# Función para calcular densidad de la t-Copula bivariada
+calc_t_copula_density <- function(rho, df) {
+  # Crear la copula t bivariada con los parámetros dados
+  copula_t <- tCopula(param = rho, df = df, dim = 2)
+  
+  # Generar un grid de puntos
+  u <- seq(0.01, 0.99, length.out = 100)
+  v <- seq(0.01, 0.99, length.out = 100)
+  
+  # Crear un dataframe para almacenar resultados
+  results <- expand.grid(u = u, v = v)
+  
+  # Calcular la densidad para cada par (u, v)
+  results$density <- apply(results, 1, function(row) {
+    dCopula(c(row["u"], row["v"]), copula = copula_t)
+  })
+  
+  return(results)
+}
+
+# Ejemplo de cálculo de densidad para rho = 0.7 y df = 5
+example_density <- calc_t_copula_density(rho = 0.7, df = 5)
+
+# Resultados para diferentes grados de libertad
+results_list <- list()
+for (rho in rhos) {
+  for (df in dfs) {
+    density_data <- calc_t_copula_density(rho = rho, df = df)
+    results_list[[paste0("rho_", rho, "_df_", df)]] <- density_data
+  }
+}
+
+# El objeto 'results_list' contiene las densidades calculadas para cada combinación
+# Ejemplo de cómo acceder a los resultados:
+# results_list[["rho_0.7_df_10"]] muestra los valores para rho = 0.7 y df = 10
+
+
 # ---------------------------- PREGUNTA 3.10 ---------------------------- #
 
+# Librerías necesarias
+library(copula)
+library(ggplot2)
 
+# Parámetros de Kendall's tau
+taus <- c(0.5, 0.8)
+u_values <- seq(0.01, 0.99, length.out = 100)
+
+# Función para calcular las funciones h condicionales
+calc_conditional_h <- function(tau, fixed_u1 = 0.5, fixed_u2 = 0.5) {
+  # Calcular el parámetro theta
+  theta <- 2 * tau / (1 - tau)
+  
+  # Crear la copula Clayton
+  clayton_copula <- claytonCopula(theta)
+  
+  # C_{2|1}(u2 | u1 = fixed_u1)
+  h_2_given_1 <- sapply(u_values, function(u2) {
+    h <- pCopula(c(fixed_u1, u2), clayton_copula) / fixed_u1
+    return(h)
+  })
+  
+  # C_{1|2}(u1 | u2 = fixed_u2)
+  h_1_given_2 <- sapply(u_values, function(u1) {
+    h <- pCopula(c(u1, fixed_u2), clayton_copula) / fixed_u2
+    return(h)
+  })
+  
+  # Resultados
+  data.frame(u = u_values, h_2_given_1 = h_2_given_1, h_1_given_2 = h_1_given_2)
+}
+
+# Función para graficar
+plot_conditional_h <- function(results, tau) {
+  p1 <- ggplot(results, aes(x = u)) +
+    geom_line(aes(y = h_2_given_1, color = "C_{2|1}(u2 | u1 = 0.5)")) +
+    geom_line(aes(y = h_1_given_2, color = "C_{1|2}(u1 | u2 = 0.5)")) +
+    labs(title = paste("Conditional h-functions for Clayton Copula with Tau =", tau),
+         x = "u", y = "h(u)") +
+    scale_color_manual(values = c("blue", "red"), name = "Conditional Functions") +
+    theme_minimal()
+  print(p1)
+}
+
+# Calcular y graficar para tau = 0.5
+results_05 <- calc_conditional_h(tau = 0.5)
+plot_conditional_h(results_05, tau = 0.5)
+
+# Calcular y graficar para tau = 0.8
+results_08 <- calc_conditional_h(tau = 0.8)
+plot_conditional_h(results_08, tau = 0.8)
+
+# Análisis para Clayton Copula rotada 90°
+rot_clayton <- function(tau, fixed_u1 = 0.5, fixed_u2 = 0.5) {
+  theta <- 2 * tau / (1 - tau)
+  
+  # Crear la copula Clayton rotada 90 grados
+  clayton_copula <- rotCopula(claytonCopula(theta), flip = c(TRUE, FALSE))
+  
+  h_2_given_1 <- sapply(u_values, function(u2) {
+    h <- pCopula(c(fixed_u1, u2), clayton_copula) / fixed_u1
+    return(h)
+  })
+  
+  h_1_given_2 <- sapply(u_values, function(u1) {
+    h <- pCopula(c(u1, fixed_u2), clayton_copula) / fixed_u2
+    return(h)
+  })
+  
+  data.frame(u = u_values, h_2_given_1 = h_2_given_1, h_1_given_2 = h_1_given_2)
+}
+
+# Graficar para copula rotada con tau = 0.5
+results_rot_05 <- rot_clayton(tau = 0.5)
+plot_conditional_h(results_rot_05, tau = "0.5 (Rotated)")
+
+# Graficar para copula rotada con tau = 0.8
+results_rot_08 <- rot_clayton(tau = 0.8)
+plot_conditional_h(results_rot_08, tau = "0.8 (Rotated)")
 
 
 
