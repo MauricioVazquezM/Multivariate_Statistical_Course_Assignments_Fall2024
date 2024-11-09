@@ -545,7 +545,7 @@ ggpairs(
 
 ```{r fig.align='center', fig.width=8, fig.height=8, echo=FALSE}
 # Path
-file_path <- "C:/Users/QTMML0102/Downloads/brrr/abalone.data"
+file_path <- "C:/Users/mauva/OneDrive/Documents/ITAM/9no Semestre/METODOS MULTIVARIADOS/REPOSITORIO/Multivariate_Statistical_Course_Assignments_Fall2024/ASSIGNMENT_02/abalone.data"
 
 # Leyendo el archivo
 abalone_data <- read.table(file_path, sep = ",", header = FALSE)
@@ -573,7 +573,6 @@ ggpairs(
 * *The effect of the degree of freedom in a bivariate Student’s t copula on the contour shapes:* For \( df = 2, \dots, 30 \) draw the normalized contour plots, when the association parameter is \( \rho = .7 \). Do the same for \( \rho = -.2 \). How do these plots change when you fix \( \tau = .7 \) and \( \tau = -.2 \), respectively.
 
 ```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
-
 # Parámetros a definir
 rhos <- c(0.7, -0.2)  # Correlaciones a evaluar
 dfs <- seq(2, 30, by = 2)  # Grados de libertad de 2 a 30
@@ -622,7 +621,6 @@ for (rho in rhos) {
 * *Conditional distribution of the Clayton copula:* Derive and visualize the \( h \) functions \( C_{2|1}(u_2 | u_1 = .5) \) and \( C_{1|2}(u_1 | u_2 = .5) \) of a bivariate Clayton copula with a Kendall’s \( \tau = .5 \) and \( \tau = .8 \), respectively. Compare the two functions. Do the same for a 90° rotated Clayton copula.
 
 ```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
-
 # Librerías necesarias
 library(copula)
 library(ggplot2)
@@ -705,6 +703,6 @@ plot_conditional_h(results_rot_08, tau = "0.8 (Rotated)")
 
 ```
 
-Cuando 𝜏 es más alta, la dependencia es más fuerte, lo que se refleja en una curvatura más pronunciada en ℎ.
+Cuando tao es más alta, la dependencia es más fuerte, lo que se refleja en una curvatura más pronunciada en h.
 
 <br>
