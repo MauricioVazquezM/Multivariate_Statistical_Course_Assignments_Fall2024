@@ -1,8 +1,10 @@
 ---
-title: "Exploratory Data Analysis: Turtles Data"
+title: 'Exploratory Data Analysis: Turtles Data'
 author: "Mauricio Vazquez Moran (000191686)"
 date: '2024-11-28'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ***Link del repositorio de GitHub: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
@@ -22,5 +24,148 @@ library(caret)
 library(dplyr)
 library(gridExtra)
 ```
+
+```{r, echo=FALSE}
+# Especifica la ruta al archivo
+file_path <- "C:\\Users\\mauva\\OneDrive\\Documents\\ITAM\\9no Semestre\\METODOS MULTIVARIADOS\\REPOSITORIO\\Multivariate_Statistical_Course_Assignments_Fall2024\\EXAM 02\\turtles.rda"
+
+# Carga el archivo .rda
+load(file_path)
+```
+
+<br>
+
+## Primeras observaciones
+
+<br>
+
+```{r, echo=FALSE}
+# Revisando head
+head(turtles) %>%
+  kable(caption = "Muestra de los datos", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+## Descripción
+
+* El conjunto de datos turtles.rda proporciona información sobre las características físicas de un grupo de tortugas. Incluye las siguientes variables:
+
+***Variables***
+
+* ***sex:*** variable categórica que indica el sexo de la tortuga.
+* ***length:*** variable numérica que representa la longitud de las tortugas en alguna unidad de medida desconocida.
+* ***width:*** variable numérica que mide el ancho de las tortugas.
+* ***height:*** variable numérica que mide la altura de las tortugas.
+
+<br>
+
+## Análisis exploratorio de datos
+
+***Análisis univariado de los datos***
+
+<br>
+
+```{r echo=FALSE}
+univar_analisis <- function(data) {
+  results <- list()
+  
+  for (feature in colnames(data)) {
+    data_type <- class(data[[feature]])[1]
+    
+    total <- nrow(data)
+    nan_count <- sum(is.na(data[[feature]]))
+    no_missings <- total - nan_count
+    pct_missings <- nan_count / total
+    
+    if (is.numeric(data[[feature]])) {
+      promedio <- round(mean(data[[feature]], na.rm = TRUE),2)
+      desv_estandar <- round(sd(data[[feature]], na.rm = TRUE),2)
+      varianza <- round(var(data[[feature]], na.rm = TRUE),2)
+      minimo <- min(data[[feature]], na.rm = TRUE)
+      p10 <- quantile(data[[feature]], 0.10, na.rm = TRUE)
+      q1 <- quantile(data[[feature]], 0.25, na.rm = TRUE)
+      mediana <- quantile(data[[feature]], 0.50, na.rm = TRUE)
+      q3 <- quantile(data[[feature]], 0.75, na.rm = TRUE)
+      p90 <- quantile(data[[feature]], 0.90, na.rm = TRUE)
+      p95 <- quantile(data[[feature]], 0.95, na.rm = TRUE)
+      p99 <- quantile(data[[feature]], 0.99, na.rm = TRUE)
+      maximo <- max(data[[feature]], na.rm = TRUE)
+      
+      inf_count <- sum(is.infinite(data[[feature]]) & data[[feature]] > 0)
+      neg_inf_count <- sum(is.infinite(data[[feature]]) & data[[feature]] < 0)
+    } else {
+      promedio <- NA
+      desv_estandar <- NA
+      varianza <- NA
+      minimo <- NA
+      p1 <- NA
+      p5 <- NA
+      p10 <- NA
+      q1 <- NA
+      mediana <- NA
+      q3 <- NA
+      p90 <- NA
+      p95 <- NA
+      p99 <- NA
+      maximo <- NA
+      inf_count <- 0
+      neg_inf_count <- 0
+    }
+    
+    results[[length(results) + 1]] <- list(
+      
+      Variable = feature,
+      Total = total,
+      No_Missings = no_missings,
+      Missings = nan_count,
+      Pct_Missings = pct_missings,
+      Promedio = promedio,
+      Desv_Std = desv_estandar,
+      Varianza = varianza,
+      Minimo = minimo,
+      p10 = p10,
+      q1 = q1,
+      Mediana = mediana,
+      q3 = q3,
+      p90 = p90,
+      p95 = p95,
+      p99 = p99,
+      Maximo = maximo
+    )
+  }
+  
+  result_df <- do.call(rbind, lapply(results, as.data.frame))
+  
+  rownames(result_df) <- NULL
+  
+  return(result_df)
+  
+}
+
+# Ejecucion de lafuncion
+resultados <- univar_analisis(turtles)
+
+# Separando el analisis
+resultados_parte1 <- resultados[, c("Variable", "Total", "No_Missings", "Missings", "Pct_Missings", "Promedio", "Desv_Std")]
+
+resultados_parte2 <- resultados[, c("Variable", "Varianza", "Minimo", "p10", "q1", "Mediana", "q3", "p90", "p95", "p99", "Maximo")]
+
+# Ver los resultados en dos partes
+resultados_parte1 %>%
+  kable(caption = "Análisis univariado de los datos pt. I", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+resultados_parte2 %>%
+  kable(caption = "Análisis univariado de los datos pt. II", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+```
+
+* Observación 1: Sin datos faltantes, se puede observar que existe una amplia variación en la longitud (length) de las tortugas, con un rango que va de tortugas más pequeñas (93) a algunas significativamente más grandes (177).
+* Observación 2: La longitud (length) promedio es de 124.69.
+* Observación 3: Sin datos faltantes en esta variable, el ancho (width) de las tortugas tiene menor variabilidad y un rango más estrecho que la longitud.
+* Observación 4: El ancho (width) promedio es de 95.46.
+* Observación 5: Sin datos faltantes en esta variable, la altura (height) presenta una variabilidad relativamente baja y valores concentrados en torno al promedio.
+* Observación 6: La altura (height) promedio es de 46.33.
 
 
