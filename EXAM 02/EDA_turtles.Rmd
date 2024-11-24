@@ -1,0 +1,26 @@
+---
+title: "Exploratory Data Analysis: Turtles Data"
+author: "Mauricio Vazquez Moran (000191686)"
+date: '2024-11-28'
+output: html_document
+---
+
+***Link del repositorio de GitHub: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, fig.width=10)
+
+# Libraries
+library(MASS)  
+library(ggplot2)
+library(GGally)
+library(mclust)
+library(kableExtra)
+library(FactoMineR)
+library(knitr)
+library(caret)
+library(dplyr)
+library(gridExtra)
+```
+
+

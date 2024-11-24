@@ -1,0 +1,51 @@
+---
+title: "Segundo Examen Parcial: Otoño 2024"
+author: "Mauricio Vazquez Moran (000191686)"
+date: '2024-11-28'
+output: html_document
+---
+
+***Link del repositorio de GitHub: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, fig.width=10)
+
+# Libraries
+library(MASS)  
+library(ggplot2)
+library(GGally)
+library(mclust)
+library(kableExtra)
+library(FactoMineR)
+library(knitr)
+library(caret)
+library(dplyr)
+library(gridExtra)
+```
+
+## Q1: Con base en los datos datos_turtles.txt, responder las siguientes preguntas:
+
+* ***a) Realice análisis de componentes principales, explicando los objetivos del análisis.***
+
+* ***b) Grafique los datos proyectados a las 2 primeras componentes principales.***
+
+* ***c) Intérprete el gráfico obtenido en b).***
+
+
+## Q2: Usando sus propias palabras:
+
+* ***a) Explique para que situaciones la cópula Clayton es un modelo adecuado.***
+
+* ***b) Explique con detalle como simular muestras de una cópula Clayton.***
+
+* ***c) Simule observaciones de dicha cópula y grafique usando un diagrama de dispersión y sobreponga curvas de contorno.***
+
+
+## Q3: Con base en los datos de distancias entre ciudades de Wisconsin, responer las siguientes preguntas:
+
+* ***a) Realice escalamiento multidimensional.***
+
+* ***b) Explique que decisiones subjetivas que tomó al aplicar el método.***
+
+* ***c) Interpretar el gráfico obtenido.***
+
