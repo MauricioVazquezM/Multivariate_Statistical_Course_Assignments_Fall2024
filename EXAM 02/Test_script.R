@@ -93,3 +93,131 @@ resultados <- univar_analisis(turtles)
 resultados_parte1 <- resultados[, c("Variable", "Total", "No_Missings", "Missings", "Pct_Missings", "Promedio", "Desv_Std")]
 
 resultados_parte2 <- resultados[, c("Variable", "Varianza", "Minimo", "p10", "q1", "Mediana", "q3", "p90", "p95", "p99", "Maximo")]
+
+# Cantidades por sexo
+sex_counts <- table(turtles$sex)
+
+# Visualización: Gráfico de barras
+barplot(
+  sex_counts,
+  main = "Cantidad de Tortugas por Sexo",
+  xlab = "Sexo",
+  ylab = "Cantidad",
+  col = c("lightblue", "lightpink"),
+  border = "black",
+  ylim = c(0, max(sex_counts) + 5) 
+)
+
+# Crear el histograma 
+histograma <- ggplot(turtles, aes(x = length)) +
+  geom_histogram(binwidth = 10, fill = "green", color = "black", alpha = 0.7) +
+  labs(title = "Histograma de las longitudes de las tortugas", x = "length", y = "Frecuencia") +
+  theme_minimal()+
+  theme(
+    plot.title = element_text(size = 9),        
+    axis.title = element_text(size = 8),         
+    axis.text = element_text(size = 7)           
+  )
+
+# Crear la curva de densidad 
+densidad <- ggplot(turtles, aes(x = length)) +
+  geom_density(fill = "red", alpha = 0.5) +
+  labs(title = "Curva de densidad las longitudes de las tortugas", x = "length", y = "Densidad") +
+  theme_minimal()+
+  theme(
+    plot.title = element_text(size = 9),        
+    axis.title = element_text(size = 8),         
+    axis.text = element_text(size = 7)           
+  )
+
+# Mostrar ambos gráficos en un solo layout
+grid.arrange(histograma, densidad, ncol = 2)
+
+# Crear el histograma 
+histograma_w <- ggplot(turtles, aes(x = width)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Histograma de lo ancho de las tortugas", x = "width", y = "Frecuencia") +
+  theme_minimal()+
+  theme(
+    plot.title = element_text(size = 9),        
+    axis.title = element_text(size = 8),         
+    axis.text = element_text(size = 7)           
+  )
+
+# Crear la curva de densidad 
+densidad_w <- ggplot(turtles, aes(x = width)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  labs(title = "Curva de densidad de lo ancho de las tortugas", x = "width", y = "Densidad") +
+  theme_minimal()+
+  theme(
+    plot.title = element_text(size = 9),        
+    axis.title = element_text(size = 8),         
+    axis.text = element_text(size = 7)           
+  )
+
+# Mostrar ambos gráficos en un solo layout
+grid.arrange(histograma_w, densidad_w, ncol = 2)
+
+# Crear el histograma 
+histograma_h <- ggplot(turtles, aes(x = heigth)) +
+  geom_histogram(binwidth = 10, fill = "orange", color = "black", alpha = 0.7) +
+  labs(title = "Histograma de la altura de las tortugas", x = "height", y = "Frecuencia") +
+  theme_minimal()+
+  theme(
+    plot.title = element_text(size = 9),        
+    axis.title = element_text(size = 8),         
+    axis.text = element_text(size = 7)           
+  )
+
+# Crear la curva de densidad 
+densidad_h <- ggplot(turtles, aes(x = heigth)) +
+  geom_density(fill = "orange", alpha = 0.5) +
+  labs(title = "Curva de densidad de la altura de las tortugas", x = "height", y = "Densidad") +
+  theme_minimal()+
+  theme(
+    plot.title = element_text(size = 9),        
+    axis.title = element_text(size = 8),         
+    axis.text = element_text(size = 7)           
+  )
+
+# Mostrar ambos gráficos en un solo layout
+grid.arrange(histograma_h, densidad_h, ncol = 2)
+
+# Boxplots agregados por sexo
+box_l <- ggplot(turtles, aes(x = sex, y = length, fill = sex)) +
+  geom_boxplot() +
+  labs(title = "Longitud por Sexo", x = "Sexo", y = "Length") +
+  theme_minimal()
+
+box_w <- ggplot(turtles, aes(x = sex, y = width, fill = sex)) +
+  geom_boxplot() +
+  labs(title = "Ancho por Sexo", x = "Sexo", y = "Width") +
+  theme_minimal()
+
+box_h <- ggplot(turtles, aes(x = sex, y = height, fill = sex)) +
+  geom_boxplot() +
+  labs(title = "Altura por Sexo", x = "Sexo", y = "Height") +
+  theme_minimal()
+
+# Mostrar ambos gráficos en un solo layout
+grid.arrange(box_l, box_w, box_h, ncol = 2)
+
+# Dataset reducido
+numerical_vars <- turtles[, c("length", "width", "height")]
+
+# Creando el pairs plot 
+ggpairs(
+  numerical_vars,
+  lower = list(continuous = "smooth"),
+  diag = list(continuous = "barDiag"), 
+  upper = list(continuous = "cor"),    
+  aes(color = length > 120, alpha = 0.7) 
+) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"), 
+    axis.title = element_text(size = 12),               
+    axis.text = element_text(size = 10),                
+    legend.position = "top"                             
+  ) +
+  labs(title = "Analisis de correlación", color = "Longitud > 120")

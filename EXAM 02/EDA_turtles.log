@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.7)  24 NOV 2024 13:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.7)  24 NOV 2024 15:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -558,8 +558,50 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [1
 
 {c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+<EDA_turtles_files/figure-latex/unnamed-chunk-4-1.pdf, id=25, 433.62pt x 216.81pt>
+File: EDA_turtles_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+<use EDA_turtles_files/figure-latex/unnamed-chunk-4-1.pdf>
+Package pdftex.def Info: EDA_turtles_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 204.
+(pdftex.def)             Requested size: 433.63878pt x 216.81938pt.
+<EDA_turtles_files/figure-latex/unnamed-chunk-5-1.pdf, id=26, 433.62pt x 216.81pt>
+File: EDA_turtles_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
+<use EDA_turtles_files/figure-latex/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: EDA_turtles_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 212.
+(pdftex.def)             Requested size: 433.63878pt x 216.81938pt.
 
-[2] (./EDA_turtles.aux)
+
+[2 <./EDA_turtles_files/figure-latex/unnamed-chunk-4-1.pdf>]
+<EDA_turtles_files/figure-latex/unnamed-chunk-6-1.pdf, id=38, 433.62pt x 216.81pt>
+File: EDA_turtles_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
+<use EDA_turtles_files/figure-latex/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: EDA_turtles_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 220.
+(pdftex.def)             Requested size: 433.63878pt x 216.81938pt.
+<EDA_turtles_files/figure-latex/unnamed-chunk-7-1.pdf, id=39, 433.62pt x 216.81pt>
+File: EDA_turtles_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
+<use EDA_turtles_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: EDA_turtles_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 228.
+(pdftex.def)             Requested size: 433.63878pt x 216.81938pt.
+
+
+[3 <./EDA_turtles_files/figure-latex/unnamed-chunk-5-1.pdf> <./EDA_turtles_files/figure-latex/unnamed-chunk-6-1.pdf>]
+<EDA_turtles_files/figure-latex/unnamed-chunk-8-1.pdf, id=62, 433.62pt x 433.62pt>
+File: EDA_turtles_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
+<use EDA_turtles_files/figure-latex/unnamed-chunk-8-1.pdf>
+Package pdftex.def Info: EDA_turtles_files/figure-latex/unnamed-chunk-8-1.pdf  used on input line 232.
+(pdftex.def)             Requested size: 433.63878pt x 433.63878pt.
+
+
+[4 <./EDA_turtles_files/figure-latex/unnamed-chunk-7-1.pdf>]
+<EDA_turtles_files/figure-latex/unnamed-chunk-9-1.pdf, id=76, 433.62pt x 433.62pt>
+File: EDA_turtles_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
+<use EDA_turtles_files/figure-latex/unnamed-chunk-9-1.pdf>
+Package pdftex.def Info: EDA_turtles_files/figure-latex/unnamed-chunk-9-1.pdf  used on input line 236.
+(pdftex.def)             Requested size: 433.63878pt x 433.63878pt.
+
+
+[5 <./EDA_turtles_files/figure-latex/unnamed-chunk-8-1.pdf>]
+
+[6 <./EDA_turtles_files/figure-latex/unnamed-chunk-9-1.pdf>] (./EDA_turtles.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
@@ -569,18 +611,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 12780 strings out of 475322
- 199644 string characters out of 5768592
+ 12838 strings out of 475322
+ 202932 string characters out of 5768592
  610482 words of memory out of 5000000
- 35394 multiletter control sequences out of 15000+600000
+ 35448 multiletter control sequences out of 15000+600000
  602099 words of font info for 75 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  89i,7n,93p,451b,566s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb>
-Output written on EDA_turtles.pdf (2 pages, 135029 bytes).
+Output written on EDA_turtles.pdf (6 pages, 207210 bytes).
 PDF statistics:
- 70 PDF objects out of 1000 (max. 8388607)
- 54 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 25 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 142 PDF objects out of 1000 (max. 8388607)
+ 109 compressed objects within 2 object streams
+ 16 named destinations out of 1000 (max. 500000)
+ 55 words of extra memory for PDF output out of 10000 (max. 10000000)
 
