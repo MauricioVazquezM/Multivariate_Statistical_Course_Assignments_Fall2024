@@ -204,7 +204,7 @@ La gráfica proporciona una clara idea de que la distribución de las tortugas p
 
 * Variable: longitud (length)
 
-```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+```{r fig.align='center', fig.width=5, fig.height=2.5, echo=FALSE}
 # Crear el histograma 
 histograma <- ggplot(turtles, aes(x = length)) +
   geom_histogram(binwidth = 5, fill = "green", color = "black", alpha = 0.7) +
@@ -237,7 +237,7 @@ Hay un mayor número de tortugas con longitudes alrededor de 110 y 140, como lo 
 
 * Variable: ancho (width)
 
-```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+```{r fig.align='center', fig.width=5, fig.height=2.5, echo=FALSE}
 # Crear el histograma 
 histograma_w <- ggplot(turtles, aes(x = width)) +
   geom_histogram(binwidth = 5, fill = "blue", color = "black", alpha = 0.7) +
@@ -252,7 +252,7 @@ histograma_w <- ggplot(turtles, aes(x = width)) +
 # Crear la curva de densidad 
 densidad_w <- ggplot(turtles, aes(x = width)) +
   geom_density(fill = "blue", alpha = 0.5) +
-  labs(title = "Curva de densidad de lo ancho de las tortugas", x = "width", y = "Densidad") +
+  labs(title = "Densidad de lo ancho de las tortugas", x = "width", y = "Densidad") +
   theme_minimal()+
   theme(
     plot.title = element_text(size = 9),        
@@ -268,9 +268,11 @@ Podemos observar en el histograma que la mayoría de las tortugas tienen un anch
 
 <br>
 
+\newpage
+
 * Variable: altura (heigth)
 
-```{r fig.align='center', fig.width=6, fig.height=3, echo=FALSE}
+```{r fig.align='center', fig.width=5, fig.height=2.5, echo=FALSE}
 # Crear el histograma 
 histograma_h <- ggplot(turtles, aes(x = height)) +
   geom_histogram(binwidth = 5, fill = "orange", color = "black", alpha = 0.7) +
@@ -285,7 +287,7 @@ histograma_h <- ggplot(turtles, aes(x = height)) +
 # Crear la curva de densidad 
 densidad_h <- ggplot(turtles, aes(x = height)) +
   geom_density(fill = "orange", alpha = 0.5) +
-  labs(title = "Curva de densidad de la altura de las tortugas", x = "height", y = "Densidad") +
+  labs(title = "Densidad de la altura de las tortugas", x = "height", y = "Densidad") +
   theme_minimal()+
   theme(
     plot.title = element_text(size = 9),        
@@ -297,11 +299,13 @@ densidad_h <- ggplot(turtles, aes(x = height)) +
 grid.arrange(histograma_h, densidad_h, ncol = 2)
 ```
 
+Por medio del histograma podemos observar que la mayoría de las tortugas tienen una altura que se concentra entre 35 y 45 unidades, mientras que las alturas mayores a 50 son poco comunes. Ademas, el pico más alto de la curva de densidad ocurre alrededor de 40, lo que corresponde a la altura más común en las tortugas. De igual manera a las anteriores dos variables analizadas, la distribución es asimétrica hacia la derecha.
+
 <br>
 
 ***Agregados por sexo***
 
-```{r fig.align='center', fig.width=6, fig.height=6, echo=FALSE}
+```{r fig.align='center', fig.width=5, fig.height=4, echo=FALSE}
 # Boxplots agregados por sexo
 box_l <- ggplot(turtles, aes(x = sex, y = length, fill = sex)) +
   geom_boxplot() +
@@ -322,10 +326,15 @@ box_h <- ggplot(turtles, aes(x = sex, y = height, fill = sex)) +
 grid.arrange(box_l, box_w, box_h, ncol = 2)
 ```
 
+* Las tortugas hembras son notablemente más largas en promedio que los machos. Se puede observar que el rango intercuartílico (IQR) entre 120 y 150 aproximadamente. La mediana esta alrededor de 140. Por su parte, el grupo de tortugas de machos su rango intercuartílico se observa entre 110 y 125. La mediana alrededor de 120.
+* Las hembras tienden a ser más anchas que los machos, aunque también muestran mayor variabilidad en esta dimensión. Bajo esta variable se puede observar que el rango intercuartílico (IQR) de las hembras esta entre 95 y 110, mientras que el rango intercuartílico (IQR) de los machos esta entre 80 a 95 aproximadamente. 
+* Las hembras tienden a ser más altas que los machos, con una mayor amplitud de valores. Esto se demuestra bajo el argumento de que el rango intercuartílico (IQR) de las hembras esta entre 48 y 58, mientras que para los machos el rango intercuartílico (IQR) esta entre 39 y 44 aproximadamente. De igual manera, se refleja este argumento en las medianas al tener las hembras una mediana de 50 y los machos una de 40 aproximadamente.
+
+<br>
 
 ***Correlación entre las variables numericas***
 
-```{r fig.align='center', fig.width=6, fig.height=6, echo=FALSE}
+```{r fig.align='center', fig.width=4.5, fig.height=4.5, echo=FALSE}
 # Dataset reducido
 numerical_vars <- turtles[, c("length", "width", "height")]
 
