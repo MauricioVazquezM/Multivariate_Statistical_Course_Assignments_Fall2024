@@ -65,7 +65,7 @@ head(turtles, n = 3) %>%
 
 ## Análisis exploratorio de datos
 
-***Análisis univariado de los datos***
+### Análisis univariado de los datos
 
 <br>
 
@@ -174,7 +174,7 @@ resultados_parte2 %>%
 
 <br>
 
-***Visualización de las variables***
+### Visualización de las variables
 
 Como objetivo de esta sección, se busca identificar patrones, detectar datos atípicos (outliers), analizar la estructura de los datos, examinar las relaciones entre las variables y comunicar, por medio de visualizaciones, para facilitar una mejor interpretación de los datos utilizados en este análisis.
 
@@ -303,23 +303,23 @@ Por medio del histograma podemos observar que la mayoría de las tortugas tienen
 
 <br>
 
-***Agregados por sexo***
+### Agregados por sexo 
 
-```{r fig.align='center', fig.width=5, fig.height=4, echo=FALSE}
+```{r fig.align='center', fig.width=4.5, fig.height=3.5, echo=FALSE}
 # Boxplots agregados por sexo
 box_l <- ggplot(turtles, aes(x = sex, y = length, fill = sex)) +
   geom_boxplot() +
-  labs(title = "Longitud por Sexo", x = "Sexo", y = "Length") +
+  labs(title = "Longitud", x = "Sexo", y = "Length") +
   theme_minimal()
 
 box_w <- ggplot(turtles, aes(x = sex, y = width, fill = sex)) +
   geom_boxplot() +
-  labs(title = "Ancho por Sexo", x = "Sexo", y = "Width") +
+  labs(title = "Ancho", x = "Sexo", y = "Width") +
   theme_minimal()
 
 box_h <- ggplot(turtles, aes(x = sex, y = height, fill = sex)) +
   geom_boxplot() +
-  labs(title = "Altura por Sexo", x = "Sexo", y = "Height") +
+  labs(title = "Altura", x = "Sexo", y = "Height") +
   theme_minimal()
 
 # Mostrar ambos gráficos en un solo layout
@@ -332,7 +332,7 @@ grid.arrange(box_l, box_w, box_h, ncol = 2)
 
 <br>
 
-***Correlación entre las variables numericas***
+### Correlación entre las variables numericas
 
 ```{r fig.align='center', fig.width=4.5, fig.height=4.5, echo=FALSE}
 # Dataset reducido
@@ -350,8 +350,12 @@ ggpairs(
   theme(
     plot.title = element_text(size = 14, face = "bold"), 
     axis.title = element_text(size = 12),               
-    axis.text = element_text(size = 10),                
+    axis.text = element_text(size = 10), 
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.y = element_text(angle = 0), 
     legend.position = "top"                             
   ) +
-  labs(title = "Analisis de correlación (segmentado por sexo)", color = "Sexo")
+  labs(title = "Analisis de correlación (por sexo)", color = "Sexo")
 ```
+
+* Como podemos observar en el grafico, las correlaciones son consistentemente más fuertes en hembras que en machos, lo que nos dice que las dimensiones físicas de las hembras están más estrechamente relacionadas.
