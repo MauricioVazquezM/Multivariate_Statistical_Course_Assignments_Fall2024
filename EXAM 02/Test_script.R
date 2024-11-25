@@ -208,10 +208,10 @@ numerical_vars <- turtles[, c("length", "width", "height")]
 # Creando el pairs plot 
 ggpairs(
   numerical_vars,
-  lower = list(continuous = "smooth"),
-  diag = list(continuous = "barDiag"), 
+  lower = list(continuous = "points"),
+  diag = list(continuous = "densityDiag"), 
   upper = list(continuous = "cor"),    
-  aes(color = length > 120, alpha = 0.7) 
+  aes(color = turtles$sex, alpha = 0.7) 
 ) +
   theme_minimal() +
   theme(
@@ -220,4 +220,4 @@ ggpairs(
     axis.text = element_text(size = 10),                
     legend.position = "top"                             
   ) +
-  labs(title = "Analisis de correlación", color = "Longitud > 120")
+  labs(title = "Analisis de correlación (segmentado por sexo)", color = "Sexo")

@@ -5,6 +5,7 @@ date: '2024-11-28'
 output:
   pdf_document: default
   html_document: default
+  word_document: default
 ---
 
 ***Link del repositorio de GitHub: https://github.com/MauricioVazquezM/Multivariate_Statistical_Course_Assignments_Fall2024***
@@ -44,7 +45,7 @@ load(file_path)
 
 ```{r, echo=FALSE}
 # Revisando head
-head(turtles) %>%
+head(turtles, n = 3) %>%
   kable(caption = "Muestra de los datos", booktabs = TRUE) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
@@ -195,7 +196,11 @@ barplot(
 )
 ```
 
+La gráfica proporciona una clara idea de que la distribución de las tortugas por sexo esta balanceada en número. Esto es importante porque garantiza evitar sesgos derivados de desbalances entre categorías 'female' o 'male'.
+
 <br>
+
+\newpage
 
 * Variable: longitud (length)
 
@@ -225,6 +230,8 @@ densidad <- ggplot(turtles, aes(x = length)) +
 # Mostrar ambos gráficos en un solo layout
 grid.arrange(histograma, densidad, ncol = 2)
 ```
+
+Hay un mayor número de tortugas con longitudes alrededor de 110 y 140, como lo indican las barras más altas. Ademas, la distribución es ligeramente asimétrica hacia la derecha, ya que hay menos tortugas con longitudes mayores a 150. Se debe añadir que la curva de densidad refuerza la idea de que las longitudes de las tortugas tienen un pico principal alrededor de 110-130 y que la caída en la cola derecha indica que hay pocas tortugas con longitudes superiores a 150.
 
 <br>
 
@@ -256,6 +263,8 @@ densidad_w <- ggplot(turtles, aes(x = width)) +
 # Mostrar ambos gráficos en un solo layout
 grid.arrange(histograma_w, densidad_w, ncol = 2)
 ```
+
+Podemos observar en el histograma que la mayoría de las tortugas tienen un ancho entre 80 y 100 unidades, lo que se observa en las barras más altas. En cuanto a los valores extremos, podemos analizar que los superiores a 110 tienen menos frecuencia. La densidad disminuye gradualmente hacia valores más altos, con una cola extendida hacia la derecha. Esta alcanza su pico en algun valor cercano a 90.
 
 <br>
 
