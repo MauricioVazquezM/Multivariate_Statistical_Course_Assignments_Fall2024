@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.7)  24 NOV 2024 19:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.7)  25 NOV 2024 23:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -613,13 +613,13 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  12853 strings out of 475322
  203254 string characters out of 5768592
- 615700 words of memory out of 5000000
+ 615762 words of memory out of 5000000
  35456 multiletter control sequences out of 15000+600000
  602099 words of font info for 75 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  89i,7n,93p,567b,514s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/mauva/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb>
-Output written on EDA_turtles.pdf (5 pages, 234602 bytes).
+Output written on EDA_turtles.pdf (5 pages, 234844 bytes).
 PDF statistics:
  164 PDF objects out of 1000 (max. 8388607)
  130 compressed objects within 2 object streams

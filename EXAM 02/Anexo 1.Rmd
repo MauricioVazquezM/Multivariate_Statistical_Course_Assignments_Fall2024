@@ -1,6 +1,6 @@
 ---
-title: 'Segundo Examen Parcial: Otoño 2024'
-author: "Mauricio Vazquez Moran (000191686)"
+title: 'Anexo 1: Visualizaciones de respuestas'
+author: "Mauricio Vazquez"
 date: '2024-11-28'
 output:
   pdf_document: default
@@ -26,13 +26,7 @@ library(gridExtra)
 library(ggfortify)
 ```
 
-## Q1: Con base en los datos datos_turtles.txt, responder las siguientes preguntas:
-
-* ***a) Realice análisis de componentes principales, explicando los objetivos del análisis.***
-
-* ***b) Grafique los datos proyectados a las 2 primeras componentes principales.***
-
-* ***c) Intérprete el gráfico obtenido en b).***
+## Visualización pregunta 1
 
 ```{r fig.align='center', fig.width=5, fig.height=3, echo=FALSE}
 # Especifica la ruta al archivo
@@ -72,20 +66,4 @@ ggplot(projected_data, aes(x = PC1, y = PC2, color = sex)) +
 ```
 
 
-## Q2: Usando sus propias palabras:
-
-* ***a) Explique para que situaciones la cópula Clayton es un modelo adecuado.***
-
-* ***b) Explique con detalle como simular muestras de una cópula Clayton.***
-
-* ***c) Simule observaciones de dicha cópula y grafique usando un diagrama de dispersión y sobreponga curvas de contorno.***
-
-
-## Q3: Con base en los datos de distancias entre ciudades de Wisconsin, responer las siguientes preguntas:
-
-* ***a) Realice escalamiento multidimensional.***
-
-* ***b) Explique que decisiones subjetivas que tomó al aplicar el método.***
-
-* ***c) Interpretar el gráfico obtenido.***
-
+## Visualización pregunta 3

@@ -221,3 +221,32 @@ ggpairs(
     legend.position = "top"                             
   ) +
   labs(title = "Analisis de correlación (segmentado por sexo)", color = "Sexo")
+
+# Variables numéricas
+numerical_vars <- turtles[, c("length", "width", "height")]
+
+# PCA
+pca_result <- prcomp(numerical_vars, scale. = TRUE)
+
+# Resumen del PCA
+#summary(pca_result)
+
+# Añadir la variable 'sex' para colorear por sexo
+projected_data <- data.frame(pca_result$x, sex = turtles$sex)
+
+# Gráfico
+ggplot(projected_data, aes(x = PC1, y = PC2, color = sex)) +
+  geom_point(size = 3, alpha = 0.7) +
+  labs(
+    title = "Proyección a las 2 primeras Componentes Principales",
+    x = "Primera Componente Principal (PC1)",
+    y = "Segunda Componente Principal (PC2)",
+    color = "Sexo"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 10),
+    legend.position = "right"
+  )
