@@ -26,66 +26,29 @@ library(gridExtra)
 library(ggfortify)
 ```
 
-## Q1: Con base en los datos datos_turtles.txt, responder las siguientes preguntas:
+## Q1: Analisis de componentes principales (PCA)
 
-* ***a) Realice análisis de componentes principales, explicando los objetivos del análisis.***
+Como podemos observar en el ***Anexo 2***, nuestro dataset (turtles.rda) no contiene una gran cantidad de variables. Las variables presentes en el conjunto de datos son 'length', 'width', 'height' y 'sex'. Si bien es cierto que un Análisis de Componentes Principales (PCA) se utiliza principalmente como técnica de reducción de dimensionalidad (Izenman 2013), también es cierto que esta herramienta estadística es usada para eliminar la redundancia en los datos, representándolos en términos de nuevas variables (componentes principales) que están descorrelacionadas entre sí. En pocas palabras, el objetivo principal del PCA es resumir un conjunto de variables en un número menor de variables significativas que, colectivamente, expliquen la mayor parte de la variabilidad presente en el conjunto original de datos (James et al., 2017). Bajo nuestra línea de análisis, según el ***Anexo 2***, mediante un Análisis Exploratorio de Datos (EDA), nos damos cuenta de que esta es nuestra situación. Las variables del conjunto de datos mencionado están altamente correlacionadas entre sí. 
 
-* ***b) Grafique los datos proyectados a las 2 primeras componentes principales.***
+Por otro lado, otro objetivo, además de reducir la dimensionalidad, es descubrir características importantes en los datos. Este proceso de descubrimiento en PCA se realiza a través de representaciones gráficas de los puntajes de las componentes principales. Los primeros puntajes de las componentes principales (principal component scores) pueden revelar si la mayor parte de los datos se encuentran en un subespacio lineal de \(\mathbb{R}^r\), y pueden ser utilizados para identificar valores atípicos, peculiaridades en la distribución y agrupaciones de puntos. Por su parte, los últimos puntajes de las componentes principales muestran proyecciones lineales de \(X\) con menor varianza. 
 
-* ***c) Intérprete el gráfico obtenido en b).***
+Una vez hecho nuestro PCA sobre el conjunto de datos turtles.rda nos podemos dar cuenta de lo siguiente:
 
-```{r fig.align='center', fig.width=5, fig.height=3, echo=FALSE}
-# Especifica la ruta al archivo
-file_path <- "C:\\Users\\mauva\\OneDrive\\Documents\\ITAM\\9no Semestre\\METODOS MULTIVARIADOS\\REPOSITORIO\\Multivariate_Statistical_Course_Assignments_Fall2024\\EXAM 02\\turtles.rda"
-
-# Carga el archivo .rda
-load(file_path)
-
-# Variables numéricas
-numerical_vars <- turtles[, c("length", "width", "height")]
-
-# PCA
-pca_result <- prcomp(numerical_vars, scale. = TRUE)
-
-# Resumen del PCA
-#summary(pca_result)
-
-# Añadir la variable 'sex' para colorear por sexo
-projected_data <- data.frame(pca_result$x, sex = turtles$sex)
-
-# Gráfico
-ggplot(projected_data, aes(x = PC1, y = PC2, color = sex)) +
-  geom_point(size = 3, alpha = 0.7) +
-  labs(
-    title = "Primeras 2 Componentes Principales",
-    x = "Primera Componente Principal (PC1)",
-    y = "Segunda Componente Principal (PC2)",
-    color = "Sexo"
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
-    axis.title = element_text(size = 12),
-    axis.text = element_text(size = 10),
-    legend.position = "right"
-  )
-```
+* Como se puede observar en el ***Anexo 1***, en la sección ***Q1: Análisis de Componentes Principales (PCA)***, la primera componente principal explica el 97.89% de la varianza total, mientras que la segunda y tercera componentes principales explican el 1.4% y 0.7% de la varianza total, respectivamente.
+* De igual manera, en esta sección se puede observar que las dos primeras componentes principales (PC1 y PC2) juntas explican el 99.29% de la variabilidad total, lo que sugiere que una reducción a dos dimensiones es adecuada para representar los datos sin perder prácticamente nada de información.
+* Por otro lado, en el gráfico de dispersión, mostrado en este apartado mencionado arriba, se muestran los datos proyectados en el espacio de las dos primeras componentes principales (PC1 y PC2), coloreados por sexo (f para hembras y m para machos), y se observa que:
+  1. Las hembras (f, color rojo) y los machos (m, color azul) presentan cierta separación en la proyección a lo largo de PC1, aunque no es completamente clara ni lineal.
+  2. La mayoría de las diferencias entre machos y hembras parecen capturarse en PC1, lo que podría reflejar diferencias generales de tamaño o proporciones físicas.
+  3. PC2 contribuye muy poco a la separación de los datos, ya que explica solo el 1.40% de la variabilidad.
 
 
-## Q2: Usando sus propias palabras:
+\newpage
 
-* ***a) Explique para que situaciones la cópula Clayton es un modelo adecuado.***
-
-* ***b) Explique con detalle como simular muestras de una cópula Clayton.***
-
-* ***c) Simule observaciones de dicha cópula y grafique usando un diagrama de dispersión y sobreponga curvas de contorno.***
+## Q2: Cópula Clayton
 
 
-## Q3: Con base en los datos de distancias entre ciudades de Wisconsin, responer las siguientes preguntas:
+\newpage
 
-* ***a) Realice escalamiento multidimensional.***
+## Q3: Escalamiento multidimensional
 
-* ***b) Explique que decisiones subjetivas que tomó al aplicar el método.***
-
-* ***c) Interpretar el gráfico obtenido.***
 
