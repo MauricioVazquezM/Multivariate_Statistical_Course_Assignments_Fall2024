@@ -26,7 +26,7 @@ library(gridExtra)
 library(ggfortify)
 ```
 
-## Visualización pregunta 1
+## Q1: Analisis de componentes principales (PCA)
 
 ```{r fig.align='center', fig.width=5, fig.height=3, echo=FALSE}
 # Especifica la ruta al archivo
@@ -42,7 +42,7 @@ numerical_vars <- turtles[, c("length", "width", "height")]
 pca_result <- prcomp(numerical_vars, scale. = TRUE)
 
 # Resumen del PCA
-#summary(pca_result)
+summary(pca_result)
 
 # Añadir la variable 'sex' para colorear por sexo
 projected_data <- data.frame(pca_result$x, sex = turtles$sex)
@@ -66,4 +66,11 @@ ggplot(projected_data, aes(x = PC1, y = PC2, color = sex)) +
 ```
 
 
-## Visualización pregunta 3
+\newpage
+
+## Q2: Cópula Clayton
+
+
+\newpage
+
+## Q3: Escalamiento multidimensional
