@@ -24,6 +24,7 @@ library(caret)
 library(dplyr)
 library(gridExtra)
 library(ggfortify)
+library(copula)
 ```
 
 ## Q1: Analisis de componentes principales (PCA)
@@ -82,8 +83,65 @@ C_u(v) = \mathbb{P}[V \leq v \mid U = u]
 
 3. Esto permite generar pares \((u, v)\) que siguen la estructura de dependencia de la cópula \(C(u, v)\), aplicando la transformación inversa a una variable aleatoria uniforme \(t\).
 
+```{r fig.align='center', fig.width=4.5, fig.height=2.5, echo=FALSE}
+# Parámetro de theta
+theta <- 3  
+set.seed(42)
+
+# Cópula de Clayton
+clayton_copula <- claytonCopula(param = theta, dim = 2)
+
+# Simulando datos
+n <- 1000  
+simulated_data <- rCopula(n, clayton_copula)
+
+# Pasando a un dataframe
+data <- data.frame(x = simulated_data[, 1], y = simulated_data[, 2])
+
+# Graficando
+ggplot(data, aes(x = x, y = y)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_density_2d(color = "red") + 
+  labs(
+    title = "Simulación de Cópula Clayton",
+    x = "Variable 1",
+    y = "Variable 2"
+  ) +
+  theme_minimal()
+```
+
 \newpage
 
 ## Q3: Escalamiento multidimensional
 
+```{r fig.align='center', fig.width=4.5, fig.height=2.5, echo=FALSE}
+# Parámetros de simulación
+set.seed(123) 
+n <- 1000     
+theta <- 3     
 
+# Crear la cópula de Clayton
+clayton_cop <- claytonCopula(param = theta, dim = 2)
+
+# Simular muestras
+samples <- rCopula(n, clayton_cop)
+
+# Convertir a dataframe para facilitar graficación
+df <- data.frame(samples)
+colnames(df) <- c("X", "Y")
+
+# Gráfico de dispersión
+ggplot(df, aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Diagrama de Dispersión - Cópula de Clayton",
+       subtitle = paste("θ =", theta)) +
+  theme_minimal()
+
+# Curvas de contorno
+ggplot(df, aes(x = X, y = Y)) +
+  geom_density_2d_filled(contour_var = "density", alpha = 0.6) +
+  labs(title = "Curvas de Contorno - Cópula de Clayton",
+       subtitle = paste("θ =", theta)) +
+  theme_minimal()
+  
+```
