@@ -46,6 +46,19 @@ Una vez hecho nuestro PCA sobre el conjunto de datos turtles.rda nos podemos dar
 
 ## Q2: Cópula Clayton
 
+La cópula de Clayton resulta especialmente útil cuando existe una dependencia en la cola inferior (lower tail dependence). En general, esto implica que es adecuada para:
+
+* Fenómenos con una propensión a experimentar eventos extremos conjuntos, particularmente en valores bajos o negativos.
+* Modelar riesgos en áreas como finanzas o seguros, donde es importante capturar la probabilidad de que ocurran simultáneamente eventos adversos.
+* Datos con correlación asimétrica, en los que la dependencia es más pronunciada en los valores extremos inferiores que en los superiores.
+* Situaciones donde se necesita modelar la relación entre variables que tienden a comportarse de manera conjunta bajo condiciones de estrés o adversidad.
+
+Algunos ejemplos "mas aterrizados" incluyen:
+
+* Modelado de riesgos financieros.
+* Análisis de fallos en sistemas de ingeniería.
+* Estudios sobre eventos climáticos extremos.
+* Evaluación de riesgos en seguros.
 
 \newpage
 

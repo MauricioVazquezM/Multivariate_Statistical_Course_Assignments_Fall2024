@@ -24,6 +24,7 @@ library(caret)
 library(dplyr)
 library(gridExtra)
 library(ggfortify)
+library(copula)
 ```
 
 ## Q1: Analisis de componentes principales (PCA)
@@ -69,6 +70,32 @@ ggplot(projected_data, aes(x = PC1, y = PC2, color = sex)) +
 \newpage
 
 ## Q2: Cópula Clayton
+
+```{r fig.align='center', fig.width=5, fig.height=3, echo=FALSE}
+# Parámetro de theta
+theta <- 2  
+
+# Cópula de Clayton
+clayton_copula <- claytonCopula(param = theta, dim = 2)
+
+# Simulando datos
+n <- 1000  
+simulated_data <- rCopula(n, clayton_copula)
+
+# Pasando a un dataframe
+data <- data.frame(x = simulated_data[, 1], y = simulated_data[, 2])
+
+# Graficando
+ggplot(data, aes(x = x, y = y)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_density_2d(color = "red") + 
+  labs(
+    title = "Simulación de una Cópula Clayton",
+    x = "Variable 1",
+    y = "Variable 2"
+  ) +
+  theme_minimal()
+```
 
 
 \newpage
