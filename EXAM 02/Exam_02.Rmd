@@ -60,6 +60,28 @@ Algunos ejemplos "mas aterrizados" incluyen:
 * Estudios sobre eventos climáticos extremos.
 * Evaluación de riesgos en seguros.
 
+Por otro lado, se uso el segundo metodo de simulacion visto en clase (teorema de inversion). Este consta del siguiente procedimiento:
+
+Citando lo visto en clase, nos apoyamos en la siguiente derivación:
+
+\[
+C_u(v) = \mathbb{P}[V \leq v \mid U = u]
+\]
+
+\[
+= \lim_{\Delta u \to 0} \frac{C(u + \Delta u, v) - C(u, v)}{\Delta u}
+\]
+
+\[
+= \frac{\partial C(u, v)}{\partial u}.
+\]
+
+1. Se generan  \( U \sim \text{Uniform}(0,1) \) y \( t \sim \text{Uniform}(0,1) \), independientes.
+
+2. Se aplica la transformación \( V = C_u^{-1}(t) \), donde \( C_u^{-1} \) es la inversa parcial de la cópula respecto a \( u \).
+
+3. Esto permite generar pares \((u, v)\) que siguen la estructura de dependencia de la cópula \(C(u, v)\), aplicando la transformación inversa a una variable aleatoria uniforme \(t\).
+
 \newpage
 
 ## Q3: Escalamiento multidimensional
