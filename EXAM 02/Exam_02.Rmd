@@ -65,17 +65,14 @@ Por otro lado, se uso el segundo metodo de simulacion visto en clase (teorema de
 
 Citando lo visto en clase, nos apoyamos en la siguiente derivación:
 
-\[
-C_u(v) = \mathbb{P}[V \leq v \mid U = u]
-\]
+Aquí está el código en R Markdown para alinear las ecuaciones:
 
-\[
-= \lim_{\Delta u \to 0} \frac{C(u + \Delta u, v) - C(u, v)}{\Delta u}
-\]
+\begin{align*}
+C_u(v) &= \mathbb{P}[V \leq v \mid U = u] \\
+&= \lim_{\Delta u \to 0} \frac{C(u + \Delta u, v) - C(u, v)}{\Delta u} \\
+&= \frac{\partial C(u, v)}{\partial u}.
+\end{align*}
 
-\[
-= \frac{\partial C(u, v)}{\partial u}.
-\]
 
 1. Se generan  \( U \sim \text{Uniform}(0,1) \) y \( t \sim \text{Uniform}(0,1) \), independientes.
 
@@ -83,65 +80,13 @@ C_u(v) = \mathbb{P}[V \leq v \mid U = u]
 
 3. Esto permite generar pares \((u, v)\) que siguen la estructura de dependencia de la cópula \(C(u, v)\), aplicando la transformación inversa a una variable aleatoria uniforme \(t\).
 
-```{r fig.align='center', fig.width=4.5, fig.height=2.5, echo=FALSE}
-# Parámetro de theta
-theta <- 3  
-set.seed(42)
-
-# Cópula de Clayton
-clayton_copula <- claytonCopula(param = theta, dim = 2)
-
-# Simulando datos
-n <- 1000  
-simulated_data <- rCopula(n, clayton_copula)
-
-# Pasando a un dataframe
-data <- data.frame(x = simulated_data[, 1], y = simulated_data[, 2])
-
-# Graficando
-ggplot(data, aes(x = x, y = y)) +
-  geom_point(alpha = 0.5, color = "blue") +
-  geom_density_2d(color = "red") + 
-  labs(
-    title = "Simulación de Cópula Clayton",
-    x = "Variable 1",
-    y = "Variable 2"
-  ) +
-  theme_minimal()
-```
+Como podemos observar en el **Anexo 1**, en la sección ***Q2: Cópula Clayton***, el diagrama de dispersión muestra una estructura de dependencia entre las dos variables aleatorias, con una mayor concentración de puntos en la esquina inferior izquierda, lo que es característico de la cópula de Clayton y refleja su capacidad de capturar la dependencia en la cola inferior. Por otro lado, las curvas de contorno, que muestran los niveles de probabilidad de la cópula de Clayton, evidencian esta característica mencionada. Esto se debe a una mayor densidad de probabilidad en la región de valores bajos. Una forma angular, típica de la cópula de Clayton, indica una mayor dependencia en los extremos inferiores de las variables. Además, se puede observar que hay una dispersión mayor en las regiones superiores, mostrando cierto tipo de independencia relativa para valores más altos.
 
 \newpage
 
 ## Q3: Escalamiento multidimensional
 
 ```{r fig.align='center', fig.width=4.5, fig.height=2.5, echo=FALSE}
-# Parámetros de simulación
-set.seed(123) 
-n <- 1000     
-theta <- 3     
 
-# Crear la cópula de Clayton
-clayton_cop <- claytonCopula(param = theta, dim = 2)
-
-# Simular muestras
-samples <- rCopula(n, clayton_cop)
-
-# Convertir a dataframe para facilitar graficación
-df <- data.frame(samples)
-colnames(df) <- c("X", "Y")
-
-# Gráfico de dispersión
-ggplot(df, aes(x = X, y = Y)) +
-  geom_point(alpha = 0.5) +
-  labs(title = "Diagrama de Dispersión - Cópula de Clayton",
-       subtitle = paste("θ =", theta)) +
-  theme_minimal()
-
-# Curvas de contorno
-ggplot(df, aes(x = X, y = Y)) +
-  geom_density_2d_filled(contour_var = "density", alpha = 0.6) +
-  labs(title = "Curvas de Contorno - Cópula de Clayton",
-       subtitle = paste("θ =", theta)) +
-  theme_minimal()
   
 ```
