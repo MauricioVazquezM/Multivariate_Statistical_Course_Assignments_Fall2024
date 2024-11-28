@@ -72,6 +72,7 @@ ggplot(projected_data, aes(x = PC1, y = PC2, color = sex)) +
 ## Q2: Cópula Clayton
 
 ```{r fig.align='center', fig.width=5, fig.height=3, echo=FALSE}
+set.seed(42) 
 # Parámetro de theta
 theta <- 2  
 
@@ -95,6 +96,17 @@ ggplot(data, aes(x = x, y = y)) +
     y = "Variable 2"
   ) +
   theme_minimal()
+
+# Curvas de contorno
+ggplot(data, aes(x = x, y = y)) +
+  geom_density_2d_filled(contour_var = "density", alpha = 0.6) +
+  labs(title = "Curvas de Contorno - Cópula de Clayton",
+       x = "Variable 1",
+       y = "Variable 2") +
+  theme_minimal()
+
+# Mostrar ambos gráficos en un solo layout
+#grid.arrange(a, b, ncol = 2)
 ```
 
 
