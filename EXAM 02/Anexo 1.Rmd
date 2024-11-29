@@ -113,3 +113,7 @@ ggplot(data, aes(x = x, y = y)) +
 \newpage
 
 ## Q3: Escalamiento multidimensional
+
+```{r fig.align='center', fig.width=5, fig.height=3,out.width='85%', echo=FALSE}
+include_graphics("Wisconsin Distances.jpeg")
+```
