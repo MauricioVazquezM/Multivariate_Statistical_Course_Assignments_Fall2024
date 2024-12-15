@@ -1,0 +1,1 @@
+# Proyecto Final: Estadística Aplicada III. Análisis de componentes principales (PCA) para compresión de imágenes
